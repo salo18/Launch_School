@@ -5,7 +5,8 @@ Easy1:
 - exercise 4 - could not figure out how to get element count and put it into a hash
 - exercise 7 - can't figure out how to print 101010 sequence based on number
 
-def fix(v)
-  v = v.upcase!
-  v.concat("!")
-end
+Easy 3:
+- exercise 9 - struggled reading the #count documentation
+- exercise 10 further exploration - palindromic numbers that start with mutliple zeros
+
+
