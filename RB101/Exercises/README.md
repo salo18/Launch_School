@@ -35,4 +35,3 @@ easy 7
 
 easy 8
 - e1 - struggled with line 6 of LS first solution
-- e5 - method returns nil and can't figure out how to check if individual item is palindrome?
