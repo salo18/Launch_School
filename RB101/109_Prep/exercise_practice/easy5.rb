@@ -267,35 +267,66 @@ Algorithm
 # 10
 =begin
 Problem:
+- need to print a box... box length varies on the length of the string
 Input:
+- a string
 Output:
+- a box with a string inside it
 Implicit / Explicit requirements:
-
-Questions?
-What should the return value be? A new object or mutate the argument?
-What happens if the input is an empty string/hash/array?
-
-Examples/Test Cases?
-
-Data Structure
+- corners of the box are + signs
+- vertical sides of the box are lines
+- horizontal sides of the box are dashes
+- string needs to be printed on the middle (3rd) row
 
 Algorithm
-
-Code
+- create an empty box
+ - initialize three variables pointing to the corresponding values associated
+ with corners, walls and sides
+ - use string concatenation to build the box
 
 =end
 
+# def print_in_box(str)
+#   corner = "+"
+#   wall = "|"
+#   side = "-"
 
-print_in_box('To boldly go where no one has gone before.')
-# +--------------------------------------------+
-# |                                            |
-# | To boldly go where no one has gone before. |
-# |                                            |
-# +--------------------------------------------+
+#   num = str.size
 
-print_in_box('')
-# +--+
-# |  |
-# |  |
-# |  |
-# +--+
+#   if str.size == 0
+#     top = corner + side + side + side + corner
+#     bottom = corner + side + side + side + corner
+#     walls_top = "#{wall} #{" " * (num + 1)} #{wall}"
+#     walls_middle = "#{wall} #{" " * (num + 1)} #{wall}"
+#     walls_bottom = "#{wall} #{" " * (num + 1)} #{wall}"
+#   end
+
+#   if str.size >= 1
+#     top = "#{corner}#{side}#{side * num}#{side}#{corner}"
+#     bottom = "#{corner}#{side}#{side * num}#{side}#{corner}"
+#     walls_top = "#{wall} #{" " * num} #{wall}"
+#     walls_middle = "#{wall} #{str} #{wall}"
+#     walls_bottom = "#{wall} #{" " * num} #{wall}"
+#   end
+
+#   p top
+#   p walls_top
+#   p walls_middle
+#   p walls_bottom
+#   p bottom
+# end
+
+# print_in_box('hey sister')
+# # +--------------------------------------------+
+# # |                                            |
+# # | To boldly go where no one has gone before. |
+# # |                                            |
+# # +--------------------------------------------+
+
+# # print_in_box('')
+# # +--+
+# # |  |
+# # |  |
+# # |  |
+# # +--+
+

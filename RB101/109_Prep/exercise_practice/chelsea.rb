@@ -148,9 +148,148 @@ Algorithm
 # end
 
 
-p left_equals_right([1, 2, 3, 4, 3, 2, 1]) #== 3
+# p left_equals_right([1, 2, 3, 4, 3, 2, 1]) #== 3
 # p left_equals_right([1, 100, 50, -51, 1, 1]) == 1
 # p left_equals_right([100, 50, -51, 1, 1]) == -1
 #p left_equals_right([20, 10, -80, 10, 10, 15, 35]) == 0
 
 
+
+
+=begin
+Write a function that when given a URL as a string, parses out just the domain name and returns it as a string. For example:
+
+Problem:
+- need to convert a url into a string contaning just the domain name
+
+Input:
+- a string representing a url
+
+Output:
+- the domain name
+
+Implicit / Explicit requirements:
+- anything that comes in between http://, https://, wwww. and .com / .ru .jp is the domain name
+- domain name can contain a dash (-)
+- domain name can be preceeded by a .
+- domain name can be preceeedd by ://
+- domain always ends with .
+
+Algorithm
+- create an array of special characters that contain the beginning or ending of a domain name (. / )
+- initialize a new string
+- convert the input string into an array of characters
+  - iterate through that array
+  - extract characters that come in between . or /  and put them into the new string
+    -
+
+- domain starts in one of four ways:
+-- http://
+-- https://
+-- http://www.
+-- https://www.
+----> depending on which way the string starts, delete index 0.. size of beginning string
+-- iterate through reamining string and stop when index == "."
+
+=end
+
+# def domain_name(string)
+#   array = string.chars
+#   without_begining = []
+#   if string.start_with?("https://www.")
+#     without_beginning = array[12..-1]
+#   elsif string.start_with?("http://www.")
+#     without_beginning = array[11..-1]
+#    elsif string.start_with?("https://")
+#     without_beginning = array[8..-1]
+#   elsif string.start_with?("http://")
+#     without_beginning = array[7..-1]
+#   elsif string.start_with?("www.")
+#     without_beginning = array[4..-1]
+#   end
+
+#   result = []
+#   index = 0
+#   loop do
+#     if without_beginning[index] != "."
+#       result << without_beginning[index]
+#     end
+#     index += 1
+#     break if without_beginning[index] == "."
+#   end
+# result.join
+# end
+
+# p domain_name("http://google.com") #== "google"
+# p domain_name("http://google.co.jp") #== "google"
+# p domain_name("www.xakep.ru") #== "xakep"
+# p domain_name("https://youtube.com") #== "youtube"
+# p domain_name("http://github.com/carbonfive/raygun") #== "github"
+# p domain_name("http://www.zombie-bites.com") #== "zombie-bites"
+# p domain_name("https://www.cnet.com") #== "cnet"
+
+
+=begin
+In this kata, you must create a digital root function.
+
+A digital root is the recursive sum of all the digits in a number. Given n, take the sum of the digits of n. If that value has more than one digit, continue reducing in this way until a single-digit number is produced. This is only applicable to the natural numbers.
+
+Here's how it works:
+
+digital_root(16)
+=> 1 + 6
+=> 7
+
+digital_root(942)
+=> 9 + 4 + 2
+=> 15 ...
+
+digital_root(132189)
+=> 1 + 3 + 2 + 1 + 8 + 9
+=> 24 ...
+=> 2 + 4
+=> 6
+
+digital_root(493193)
+=> 4 + 9 + 3 + 1 + 9 + 3
+=> 29 ...
+=> 2 + 9
+=> 11 ...
+=> 1 + 1
+=> 2
+
+Problem:
+- need to break the integer into its component parts
+- sum those parts
+- if the size of the summation is larger than 1, do it again
+
+Input: an integer
+Output: an integer reprensenting the sum of the roots
+Implicit / Explicit requirements:
+- number has a size... size is the number of digits
+- need to continue this process until the number is 1 digit long
+
+Algorithm
+-- define `number_size` method
+  - takes the integer and determines the integer size .to_s.size?
+-- if input integer size is greater than 1
+  >>-- define `process` method
+    - split out the integers into component parts (into an array of string characters?)
+    - sum the array
+-- if the new number is greater than 1, repeat the process over again
+-- if not, return the new number
+=end
+
+def digital_root(number)
+  until number.to_s.size == 1
+    number = number.to_s.chars.map(&:to_i).sum    #{|i| i.to_i}
+  end
+  number
+end
+
+# def root(num)
+#   num.to_s.chars.map {|i| i.to_i}.sum
+# end
+
+# p digital_root(16) #== 7
+p digital_root(456) #== 6 # 4 + 5 + 6 == 15 >> 1 + 5 == 6
