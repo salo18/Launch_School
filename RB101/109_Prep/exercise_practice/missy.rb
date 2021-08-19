@@ -177,71 +177,187 @@ Algorithm
   - extract the first array element of the last hash
 =end
 
-ALPHABET = []
-("a".."z").to_a.each do |letter|
-  ALPHABET << letter
+# ALPHABET = []
+# ("a".."z").to_a.each do |letter|
+#   ALPHABET << letter
+# end
+
+# def longest(string)
+#   # substrings = create_substrings(string)
+#   # valid = valid_substrings(substrings)
+#   longest_substring(valid_substrings(create_substrings(string)))
+# end
+
+# def create_substrings(str) #create all substrings
+#   all_substrings = []
+#   start_index = 0
+#   end_index = 0
+#   loop do
+#     loop do
+#       all_substrings << str[start_index..end_index]
+#       end_index += 1
+#       break if end_index == str.size
+#     end
+#     end_index = start_index
+#     start_index += 1
+#     break if start_index == str.size
+#   end
+#   all_substrings
+# end
+
+# def valid_substrings(all_substrings)
+#   all_substrings.select do |substring|
+#     substring.chars.sort == substring.chars
+#   end
+# end
+
+# def longest_substring(valid_substrings)
+#   valid_substrings.sort_by! do |valid_substring_arr|
+#     valid_substring_arr.size
+#   end
+#   substring_hash = {}
+
+#   valid_substrings.each do |string|
+#     if substring_hash[string.size] == nil
+#       substring_hash[string.size] = [string]
+#     else
+#       substring_hash[string.size] << string
+#     end
+#   end
+
+#  if valid_substrings.size == 1
+#     result = valid_substrings.join
+#  else
+#   result = substring_hash[substring_hash.size - 1][0]
+#   end
+
+#   result
+# end
+
+# p longest("asdfaaaabbbbcttavvfffffdf") == "aaaabbbbctt"
+# p longest('asd') == 'as'
+# p longest('nab') == 'ab'
+# p longest('abcdeapbcdef') == 'abcde'
+# p longest('asdfaaaabbbbcttavvfffffdf') == 'aaaabbbbctt'
+# p longest('asdfbyfgiklag') =='fgikl'
+# p longest('z') == 'z'
+# p longest('zyba') == 'z'
+
+
+
+
+=begin
+You will be given a collection of five cards (representing a player's hand in poker). If your hand contains at least one pair, return an array of two elements: true and the card number of the highest pair (trivial if there only exists a single pair). Else, return false.
+
+Hands with three or more of the same card still count as containing a pair (see the last example).
+
+Problem:
+- need to return an array that contains `true` and the highest pair
+- if no pairs in the hand, return false
+
+Input: an array of strings representing a deck of cards
+Output: an array containing (1. true and the value of the highest pair) or (2. false)
+
+Implicit / Explicit requirements:
+- Ace is the highest card and does not count as 2
+- a pair is when a card is repeated at least once
+  -- x2, x3, x4, x5
+- if there are multiple pairs, need to determine which pair is highest
+- order of the deck of cards... (2..10) + J, Q, K, A
+- if there are no pairs, return false
+
+Algorithm
+- initialize an array that contains the order of the deck of cards
+  - (2..10) + J, Q, K, A
+- iterate through input array
+  - determine if there is a pair -- Helper method?
+    - a pair exists if a card is repeated at least once
+  - get array from helper method
+    - if there are multiple pairs, which one is highest?
+      - compare the card to the indexes of the cards array (A is 21, Q is 19)
+- return highest pair and true OR return false if helper method array is empty
+  - assuming an array of pairs, return the max element
+    -
+
+Pair Helper method:
+- iterate through the array
+- sort the array so that array is in alphabetical order
+- compare the element at index 1 to index 0
+  arr[index] == arr[index + 1]
+- if any of the elements return true, store them in a new array
+- return the array containing any pairs or an empty array
+=end
+DECK = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"]
+  UPPERCASE = ("A".."Z").to_a
+
+
+def highest_pair(hand_of_five)
+  uppercase = ("A".."Z").to_a
+  pairs = pair(hand_of_five)
+
+  if pairs.empty?
+    return false
+  else
+    return [true, card_max(pairs)]
+  end
+  # if pairs.size > 1
+  #   if deck.index(pairs[0]) > deck.index(pairs[1])
+  #     if uppercase.include?(pairs[0])
+  #       return[true, pairs[0]]
+  #     else
+  #       return [true, pairs[0].to_i]
+  #     end
+  #   else
+  #     if uppercase.include?(pairs[0])
+  #       return[true, pairs[1]]
+  #     else
+  #       return [true, pairs[1].to_i]
+  #     end
+  #   end
+  # elsif pairs.size == 1
+  #   if uppercase.include?(pairs[0])
+  #       return[true, pairs[0]]
+  #     else
+  #       return [true, pairs[0].to_i]
+  #     end
+  # else
+  #   return false
+  # end
 end
 
-def longest(string)
-  # substrings = create_substrings(string)
-  # valid = valid_substrings(substrings)
-  longest_substring(valid_substrings(create_substrings(string)))
+# given an array of two cards, determine which is higher
+
+def card_max(array)
+  array.sort_by! do |card|
+    DECK.index(card)
+  end
+  int_str?(array[-1])
 end
 
-def create_substrings(str) #create all substrings
-  all_substrings = []
-  start_index = 0
-  end_index = 0
-  loop do
-    loop do
-      all_substrings << str[start_index..end_index]
-      end_index += 1
-      break if end_index == str.size
+def int_str?(highest_card)
+  if UPPERCASE.include?(highest_card)
+    return highest_card
+  else
+    return highest_card.to_i
+  end
+end
+
+# p card_max(example_cards) # return a string or integer depending on card
+# return a string if it's a face card
+# return an integer if it's not
+
+def pair(hand)
+  pairs = []
+  hand.sort!.each_with_index do |card, idx|
+    if hand[idx] == hand[idx + 1]
+      pairs << card
     end
-    end_index = start_index
-    start_index += 1
-    break if start_index == str.size
   end
-  all_substrings
+  pairs
 end
 
-def valid_substrings(all_substrings)
-  all_substrings.select do |substring|
-    substring.chars.sort == substring.chars
-  end
-end
-
-def longest_substring(valid_substrings)
-  valid_substrings.sort_by! do |valid_substring_arr|
-    valid_substring_arr.size
-  end
-  substring_hash = {}
-
-  valid_substrings.each do |string|
-    if substring_hash[string.size] == nil
-      substring_hash[string.size] = [string]
-    else
-      substring_hash[string.size] << string
-    end
-  end
-
- if valid_substrings.size == 1
-    result = valid_substrings.join
- else
-  result = substring_hash[substring_hash.size - 1][0]
-  end
-
-  result
-end
-
-p longest("asdfaaaabbbbcttavvfffffdf") == "aaaabbbbctt"
-p longest('asd') == 'as'
-p longest('nab') == 'ab'
-p longest('abcdeapbcdef') == 'abcde'
-p longest('asdfaaaabbbbcttavvfffffdf') == 'aaaabbbbctt'
-p longest('asdfbyfgiklag') =='fgikl'
-p longest('z') == 'z'
-p longest('zyba') == 'z'
-
-
-
+p highest_pair(["A", "A", "Q", "Q", "6" ]) #== [true, "A"]
+p highest_pair(["J", "6", "3", "10", "8"]) #== false
+p highest_pair(["K", "7", "3", "9", "3"]) #== [true, 3]
+p highest_pair(["K", "9", "10", "J", "Q"]) #== false
+p highest_pair(["3", "5", "5", "5", "5"]) #== [true, 5]
