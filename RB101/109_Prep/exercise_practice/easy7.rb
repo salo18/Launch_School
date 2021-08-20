@@ -141,23 +141,51 @@ algo:
 # p multiply_list([3, 5, 7], [9, 10, 11]) #== [27, 50, 77]
 
 # 9
-def multiply_all_pairs(arr1, arr2)
-  first_index = 0
-  second_index = 0
-  new_arr = []
-  a2_size = arr2.size - 1
-  loop do
-    loop do
-      new_arr << (arr1[first_index] + arr2[second_index])
-      second_index += 1
-      break if second_index == a2_size
-    end
-    first_index += 1
-    break if first_index == arr1.size
-  end
-new_arr
-end
+# def multiply_all_pairs(arr1, arr2)
+#   # first_index = 0
+#   # second_index = 0
+#   # new_arr = []
+#   # a2_size = arr2.size - 1
+#   # loop do
+#   #   loop do
+#   #     new_arr << (arr1[first_index]) * arr2[second_index]
+#   #     second_index += 1
+#   #     break if second_index == arr2.size
+#   #   end
+#   #   first_index += 1
+#   #   second_index = 0
+#   #   break if first_index == arr1.size
+#   # end
+#   # new_arr.sort
 
-p multiply_all_pairs([2, 4], [4, 3, 1, 2]) == [2, 4, 4, 6, 8, 8, 12, 16]
+#   products = []
+#   arr1.each do |item1|
+#     arr2.each do |item2|
+#       products << item1 * item2
+#     end
+#   end
+#   products.sort
+# end
+
+# p multiply_all_pairs([2, 4], [4, 3, 1, 2]) == [2, 4, 4, 6, 8, 8, 12, 16]
+
+# 10
+# def penultimate(str)
+#   str.split[-2]
+# end
+
+# p penultimate('last word') == 'last'
+# p penultimate('Launch School is great!') == 'is'
+
+
+# # Write a method that returns the middle word of a phrase or sentence.
+# # It should handle all of the edge cases you thought of.
+
+# middle_word("hey") == "please enter an odd string with an odd number of words greater than 1"
+# middle_word("hey its odd") == "its"
+# middle_word("hey its so even") == "string is even, no middle word"
+
+
+
 
 

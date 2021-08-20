@@ -280,16 +280,137 @@ Algorithm
 -- if not, return the new number
 =end
 
-def digital_root(number)
-  until number.to_s.size == 1
-    number = number.to_s.chars.map(&:to_i).sum    #{|i| i.to_i}
-  end
-  number
-end
-
-# def root(num)
-#   num.to_s.chars.map {|i| i.to_i}.sum
+# def digital_root(number)
+#   until number.to_s.size == 1
+#     number = number.to_s.chars.map(&:to_i).sum    #{|i| i.to_i}
+#   end
+#   number
 # end
 
-# p digital_root(16) #== 7
-p digital_root(456) #== 6 # 4 + 5 + 6 == 15 >> 1 + 5 == 6
+# # def root(num)
+# #   num.to_s.chars.map {|i| i.to_i}.sum
+# # end
+
+# # p digital_root(16) #== 7
+# p digital_root(456) #== 6 # 4 + 5 + 6 == 15 >> 1 + 5 == 6
+
+
+# =begin
+# Complete the function scramble(str1, str2) that returns true if a portion of str1 characters can be rearranged to match str2, otherwise returns false.
+
+# Notes:
+
+# Only lower case letters will be used (a-z). No punctuation or digits will be included.
+
+# Problem:
+# - is each character in string 2 included in string 1?
+
+# Input: two strings
+# Output: boolean
+# Implicit / Explicit requirements:
+# - Only lower case letters will be used (a-z). No punctuation or digits will be included.
+# - characters in string 2 have to be included in string 1
+# - string1 can have many characters not in string 2
+# -- characters in string 2 must all be in string 1
+# - order of characters does not matter
+
+# Algorithm
+# - initialize an array that points to str1 characters (chars)
+# - iterate over str2
+#   - check if character in str2 is included in str1
+#   - && check if character in str2 occurs less than or equal to the amount of times it occurs in str1
+#   - map? -- if the array contains any false values, return false
+# =end
+
+# def scramble(str1, str2)
+#   arr = str1.chars
+#   boolean = str2.chars.map do |char|
+#     arr.include?(char) && str2.count(char) <= str1.count(char)
+#   end
+#   boolean.include?(false) ? false : true
+# end
+
+
+
+# p scramble('rkqodlw', 'world') == true
+# p scramble('cedewaraaossoqqyt', 'codewars') == true
+# p scramble('katas', 'steak') == false
+# p scramble('rkqodlw','world') == true
+# p scramble('cedewaraaossoqqyt','codewars') == true
+# p scramble('katas','steak') == false
+# p scramble('scriptjava','javascript') == true
+
+# p scramble('aa', 'aaa') == false
+
+
+=begin
+Write a function with the signature shown below:
+
+returns true / True if every element in an array is an integer or a float with no decimals.
+returns true / True if array is empty.
+returns false / False for every other input.
+
+Problem:
+- need to figure out if the array element is a float with no decimals or an integer
+
+Input: an array (can contain any values and data types)
+Output: boolean
+Implicit / Explicit requirements:
+- a float is 1.0
+>> float without decimals is 1.0 but not 1.1 etc
+- array element must be an integer, float without decimals or an empty array
+- if array includes any other elements, return false
+- negative integers are also allowed
+- nil would return false
+- empty string returns false
+
+Algorithm
+- if array is empty, return true
+- iterate through input array
+ - select array elements for which element == element.to_f >>> this wont work for strings
+- return false if array includes nil
+-- how to determine if array element is a string?
+  - call map on input array
+    - test if each element is a string
+      - if this array includes false, return false
+
+
+=end
+
+def is_int_array(array)
+  return true if array.empty?
+
+#   is_string = array.map do |el|
+#     el == el.to_i
+#   end
+
+  # return false if is_string.include?(false)
+
+#   return false if array.include?(nil)
+
+#   # result = array.map do |el|
+#   #   el == el.to_i
+    # end
+
+  result = array.select do |el|
+    el == el.to_i
+  end
+
+  result.size == array.size
+
+
+#   return false if result.include?(false)
+
+#   true
+end
+
+
+# test cases
+p is_int_array([]) == true
+p is_int_array([1, 2, 3.0, 4]) == true
+p is_int_array([-11, -12, -13, -14]) == true
+p is_int_array([1, 2, nil]) == false
+p is_int_array([nil]) == false
+p is_int_array([1.0, 2.0, 3.0001]) == false
+p is_int_array(["-1"]) == false
+p is_int_array([1.2, 1.8, 3]) == false
