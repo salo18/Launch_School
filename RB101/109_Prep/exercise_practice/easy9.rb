@@ -192,6 +192,7 @@
 
 # 11
 =begin
+HASH
 - anagrams are words that have the same letters in a different order
 > demo, mode, dome
 - initialize an empty hash
@@ -200,24 +201,40 @@
   - else add word as a key
 - output hash values
 
-- str.chars.sort
+ARRAY
+- make an array containing all anagrams
+- iterate over this new array
+  - map to make a new array
+    - select words for which the anagram == the word.chars.sort
 =end
 
 def anagram(arr)
-  result = {}
+  anagrams = arr.map {|word| word.chars.sort.join}.uniq
 
-  arr.each do |word|
-    key = word.chars.sort.join
-    if result.include?(key)
-      result[key].push(word)
-    else
-      result[key] = [word]
+  array_of_ana = anagrams.map do |word|
+    arr.select do |ana|
+      word == ana.chars.sort.join
     end
   end
-  # result = {'demo'=> ["demo", "dome", "mode"], etc}
-  result.each do |_, v|
-    p v
-  end
+
+  array_of_ana.each {|ar| p ar}
+
+  # result = {}
+
+  # arr.each do |word|
+  #   key = word.chars.sort.join
+  #   if result.include?(key)
+  #     result[key].push(word)
+  #   else
+  #     result[key] = [word]
+  #   end
+  # end
+  # # result = {'demo'=> ["demo", "dome", "mode"], etc}
+  # result.each do |_, v|
+  #   p v
+  # end
+
+
 
 
 end
