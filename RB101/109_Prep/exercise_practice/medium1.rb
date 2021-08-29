@@ -67,21 +67,47 @@ Algorithm
 # end
 
 # refactored
-def rotate_rightmost_digits(int, n)
-  arr = int.to_s.chars.map(&:to_i)
+# def rotate_rightmost_digits(int, n)
+#   arr = int.to_s.chars.map(&:to_i)
 
-  sequence = arr[-n..-1]
-  unaltered_arr = arr[0...-n]
+#   sequence = arr[-n..-1]
+#   unaltered_arr = arr[0...-n]
 
-  final_sequence = sequence[1..-1] << sequence[0]
+#   final_sequence = sequence[1..-1] << sequence[0]
 
-  result = unaltered_arr << final_sequence
-  result.flatten.join.to_i
-end
+#   result = unaltered_arr << final_sequence
+#   result.flatten.join.to_i
+# end
 
-p rotate_rightmost_digits(735291, 1) == 735291
-p rotate_rightmost_digits(735291, 2) == 735219
-p rotate_rightmost_digits(735291, 3) == 735912
-p rotate_rightmost_digits(735291, 4) == 732915
- p rotate_rightmost_digits(735291, 5) == 752913
- p rotate_rightmost_digits(735291, 6) == 352917
+# p rotate_rightmost_digits(735291, 1) == 735291
+# p rotate_rightmost_digits(735291, 2) == 735219
+# p rotate_rightmost_digits(735291, 3) == 735912
+# p rotate_rightmost_digits(735291, 4) == 732915
+#  p rotate_rightmost_digits(735291, 5) == 752913
+#  p rotate_rightmost_digits(735291, 6) == 352917
+
+# 3
+
+# def max_rotation(int)
+#   arr = int.to_s.chars.map(&:to_i)
+#   n = arr.size - 2
+
+
+#   result = []
+#   n.times do |i|
+#     sequence = arr[(i+1)..-1]
+#     unaltered_arr = arr[0...i]
+#     final_sequence = sequence[1..-1] << sequence[0]
+#     result = unaltered_arr << final_sequence
+#   end
+
+#   result.flatten.join.to_i
+# end
+
+# p max_rotation(735291) #== 321579
+# # p max_rotation(3) == 3
+# # p max_rotation(35) == 53
+# # p max_rotation(105) == 15 # the leading zero gets dropped
+# # p max_rotation(8_703_529_146) == 7_321_609_845
+
+# 4
