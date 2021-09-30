@@ -191,13 +191,13 @@
 # Bird < Flyable < Animal
 
 # 10
-module Transportation
-  class Vehicle
-  end
+# module Transportation
+#   class Vehicle
+#   end
 
-  class Truck < Vehicle
-  end
+#   class Truck < Vehicle
+#   end
 
-  class Car < Vehicle
-  end
-end
+#   class Car < Vehicle
+#   end
+# end
