@@ -1,5 +1,5 @@
-# RPS Bonus Features
-# rubocop:disable Layout/LineLength
+# # RPS Bonus Features
+# # rubocop:disable Layout/LineLength
 =begin
 
 RUBOCOP NOTES:
@@ -8,7 +8,7 @@ RUBOCOP NOTES:
 FEATURE: Keep score -- first to ten points wins
   >>> added an attr_accessore :score to Player class to keep track of the score
   >>> defined new display_score instance method to display points
-  >>> changed implementation of RPSGame.play so that it has two loops
+  >>> changed implementation of RPSGame#play so that it has two loops
   >>> inner loop checks the points method to see if either player has X amount of points
      >>> outter loop asks the player to play again and resets the score in a new implementation
          of play_again?
@@ -19,7 +19,7 @@ FEATURE: Keep score -- first to ten points wins
 
  FEATURE: Keep track of history of moves
   >>> added :history to the attr_accessor of Player classs
-  >>> added a new instance method RPSGame.move_history that adds each move object to the empty array referenced by
+  >>> added a new instance method RPSGame#move_history that adds each move object to the empty array referenced by
       the @history instance variable
   >>> created the RPSGame.display_history instance method to output the array elements at the end of
       the game before the user is prompted to restart the game
@@ -37,7 +37,7 @@ FEATURE: Keep score -- first to ten points wins
       paper is the more likely outcome of the #sample method invocation)
 
  FEATURE: Resetting Computer player after each round
-  >>> created RPSGame.reset_computer_name to run after each round. computer.name is reset and the new
+  >>> created RPSGame#reset_computer_name to run after each round. computer.name is reset and the new
       computer is introduced to the player
   ** REASONING: the player can get bored playing with the same computer round after round. After each
       round, the computer @name is reset so that new computer rules are applied to each game. The current
@@ -264,3 +264,4 @@ class RPSGame
 end
 
 RPSGame.new.play
+
