@@ -1,24 +1,21 @@
 =begin
 Questions:
-defition of custom [] method didn't make sense to me
-
+-- defition of custom [] method didn't make sense to me
 -- should :round be in the Player class or the TTTGame class? I made it
 in the TTTGame class since it seemed relevant to the game play and not to a
 specific player
-
--- can't for the life of me figure out why the round and score are not
+-- can't for the life of me figure out why TTTGame#display_stats are not
 being displayed when the user chooses for the computer to go first.
 
 Rubocop offenses:
-Line 192 - didn't want to jam all the main_game methods into one larger method
-Line 265 - #pick_human_marker is too complex but I don't want to refactor
+Line 190 - didn't want to jam all the main_game methods into one larger method
+Line 263 - #pick_human_marker is too complex but I don't want to refactor
             just for the sake of pleasing rubocop if the method is simple but long
-Line 285 - same for #pick_computer_marker... it is too complex because I added
+Line 283 - same for #pick_computer_marker... it is too complex because I added
             lots of input validation that I don't want to remove
-Line 371 - #computer_moves - ignoring this cop because there are a lot of moves
+Line 369 - #computer_moves - ignoring this cop because there are a lot of moves
             the computer to go through and I think it should stay in the same method
             for simplicity
-
 
 BONUS FEATURES:
 1. Allow player to pick marker
@@ -50,6 +47,7 @@ BONUS FEATURES:
 7. Computer turn refinements --
 -- switched order of TTTGame#computer_moves -- offense first
 -- added feature of picking 5 if available after defense
+-- allowed the user to decide which player goes first TTTGame#ask_who_goes_first
 =end
 require 'pry'
 
