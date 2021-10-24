@@ -10,7 +10,15 @@ specific player
 being displayed when the user chooses for the computer to go first.
 
 Rubocop offenses:
-- 
+Line 192 - didn't want to jam all the main_game methods into one larger method
+Line 265 - #pick_human_marker is too complex but I don't want to refactor
+            just for the sake of pleasing rubocop if the method is simple but long
+Line 285 - same for #pick_computer_marker... it is too complex because I added
+            lots of input validation that I don't want to remove
+Line 371 - #computer_moves - ignoring this cop because there are a lot of moves
+            the computer to go through and I think it should stay in the same method
+            for simplicity
+
 
 BONUS FEATURES:
 1. Allow player to pick marker
@@ -180,12 +188,13 @@ class TTTGame
     press_key_to_continue
   end
 
+  # rubocop:disable Metrics/MethodLength
   def main_game
     loop do
       loop do
         reset
         ask_who_goes_first
-        display stats
+        display_stats
         player_move
         display_result
         press_key_to_continue
@@ -200,6 +209,7 @@ class TTTGame
       reset
     end
   end
+  # rubocop:enable Metrics/MethodLength
 
   def display_stats
     display_round
