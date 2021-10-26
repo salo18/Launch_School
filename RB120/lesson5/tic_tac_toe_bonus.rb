@@ -1,6 +1,6 @@
 =begin
 Questions:
--- defition of custom [] method didn't make sense to me -- why is marker called on @squares[num]?
+-- defition of custom [] method didn't make sense to me -- why is marker called on board[squares]?
 -- should :round be in the Player class or the TTTGame class? I made it
 in the TTTGame class since it seemed relevant to the game play and not to a
 specific player
