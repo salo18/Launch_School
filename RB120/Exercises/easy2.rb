@@ -117,9 +117,7 @@
 
 #   attr_reader :amount
 
-
 # end
-
 
 # bills_wallet = Wallet.new(500)
 # pennys_wallet = Wallet.new(465)
@@ -314,6 +312,8 @@
 # # => "Flash runs forward"
 
 # 10
+
+
 module Walkable
   def walk
     puts "#{self} #{gait} forward"
@@ -358,6 +358,8 @@ class Noble < Person
   def to_s
     "#{title} #{name}"
   end
+
+
 
 
 end
