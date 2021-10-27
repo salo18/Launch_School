@@ -1,3 +1,4 @@
+# rubocop:disable Layout/LineLength
 =begin
 Questions:
 -- defition of custom [] method didn't make sense to me -- why is marker called on board[squares]?
@@ -49,6 +50,8 @@ BONUS FEATURES:
 -- added feature of picking 5 if available after defense
 -- allowed the user to decide which player goes first TTTGame#ask_who_goes_first
 =end
+
+# rubocop:enable Layout/LineLength
 require 'pry'
 
 class Board
@@ -93,15 +96,15 @@ class Board
   # rubocop:disable Metrics/AbcSize
   def draw
     puts ""
-    puts "     |     |"
+    puts "#{number(1)}    |#{number(2)}    |#{number(3)}"
     puts "  #{@squares[1]}  |  #{@squares[2]}  |  #{@squares[3]}"
     puts "     |     |"
     puts "-----+-----+-----"
-    puts "     |     |"
+    puts "#{number(4)}    |#{number(5)}    |#{number(6)}"
     puts "  #{@squares[4]}  |  #{@squares[5]}  |  #{@squares[6]}"
     puts "     |     |"
     puts "-----+-----+-----"
-    puts "     |     |"
+    puts "#{number(7)}    |#{number(8)}    |#{number(9)}"
     puts "  #{@squares[7]}  |  #{@squares[8]}  |  #{@squares[9]}"
     puts "     |     |"
     puts ""
@@ -110,6 +113,14 @@ class Board
 
   def []=(num, marker)
     @squares[num].marker = marker
+  end
+
+  def number(num)
+    if @squares[num].marker == Square::INITIAL_MARKER
+      num
+    else
+      " "
+    end
   end
 
   private
@@ -147,9 +158,151 @@ class Player
 
   def initialize(marker)
     @marker = marker
-    @name
+    @name = nil
     @score = 0
   end
+
+  CHARS = ("a".."z").to_a + ("A".."Z").to_a + ("0".."9").to_a
+end
+
+class Human < Player
+  def pick_name
+    puts "What is your name?"
+    player_name = nil
+    loop do
+      player_name = gets.chomp.to_s
+      break if (Player::CHARS).include?(player_name.chars[0])
+      puts "Oops, must write your name."
+    end
+    self.name = player_name
+  end
+
+  def pick_marker
+    puts ""
+    puts "What would you like your marker to be? You can pick any character."
+    human_marker = nil
+    loop do
+      human_marker = gets.chomp
+
+      if human_marker.size != 1
+        puts "Oops! Must pick a single character."
+      elsif !(Player::CHARS).to_a.include?(human_marker)
+        puts "Oops! Must pick a valid character (letter or number)."
+      end
+
+      break if human_marker.size == 1 &&
+               (Player::CHARS).to_a.include?(human_marker)
+    end
+    self.marker = human_marker
+    puts "Success! You picked #{marker} as your own marker."
+  end
+
+  def moves(board)
+    puts "Choose an available square: #{joinor(board.unmarked_keys)}"
+    square = nil
+    loop do
+      square = gets.chomp.to_i
+      break if board.unmarked_keys.include?(square)
+      puts "That's not a valid option... Choose a number 1 - 9."
+    end
+
+    board[square] = marker
+  end
+
+  private
+
+  def joinor(arr, delimiter=", ", word="or")
+    case arr.size
+    when 0 then ""
+    when 1 then arr[0]
+    when 2 then arr.join(" #{word}")
+    else
+      new_arr = arr
+      new_arr[-1] = "#{word} #{arr[-1]}"
+      new_arr.join(delimiter)
+    end
+  end
+end
+
+class Computer < Player
+  def pick_name
+    puts ""
+    puts "What is the name of the computer you will be playing against?"
+    computer_name = nil
+    loop do
+      computer_name = gets.chomp
+      break if (Player::CHARS).include?(computer_name.chars[0])
+      puts "Oops, must write a valid name."
+    end
+    self.name = computer_name
+  end
+
+  # rubocop:disable Layout/LineLength
+  def pick_marker(human_marker)
+    puts ""
+    puts "What would you like the computer's marker to be? You can pick any character."
+    computer_marker = nil
+    loop do
+      computer_marker = gets.chomp
+
+      if computer_marker.size != 1
+        puts "Oops! Must pick a single character"
+      elsif !(Player::CHARS).to_a.include?(computer_marker)
+        puts "Oops! Must pick a valid character (letter or number)."
+      elsif computer_marker == human_marker
+        puts "Oops! You've already picked that marker for yourself.
+        Pick another one."
+      end
+
+      break if (computer_marker.size == 1) &&
+               ((Player::CHARS).to_a.include?(computer_marker)) &&
+               (computer_marker != human_marker)
+    end
+    self.marker = computer_marker
+    puts "Success! You picked #{marker} as the computer's marker."
+  end
+  # rubocop:enable Layout/LineLength
+
+  def moves(board, human_marker)
+    square = nil
+    # offensive
+    Board::WINNING_LINES.each do |line|
+      square = find_at_risk_square(line, marker, board)
+      break if square
+    end
+
+    # defensive
+    if !square
+      Board::WINNING_LINES.each do |line|
+        square = find_at_risk_square(line, human_marker, board)
+        break if square
+      end
+    end
+
+    # pick square 5
+    if !square
+      square = 5 if board.squares[5].marker == Square::INITIAL_MARKER
+    end
+
+    # random sample
+    if !square
+      square = board.unmarked_keys.sample
+    end
+
+    board[square] = marker
+  end
+
+  private
+
+  # rubocop:disable Layout/LineLength
+  def find_at_risk_square(line, marker, board)
+    squares_hash = board.squares.slice(*line)
+    markers = squares_hash.select { |_, v| v.marked? }.values.map(&:marker)
+    if markers.count(marker) == 2
+      squares_hash.select { |_, v| v.marker == Square::INITIAL_MARKER }.keys.first
+    end
+  end
+  # rubocop:enable Layout/LineLength
 end
 
 class TTTGame
@@ -161,9 +314,9 @@ class TTTGame
 
   def initialize
     @board = Board.new
-    @human = Player.new(HUMAN_MARKER)
-    @computer = Player.new(COMPUTER_MARKER)
-    @current_marker #= FIRST_TO_MOVE
+    @human = Human.new(HUMAN_MARKER)
+    @computer = Computer.new(COMPUTER_MARKER)
+    @current_marker = nil
     @round = 1
   end
 
@@ -178,10 +331,10 @@ class TTTGame
 
   def game_setup
     display_welcome_message
-    pick_human_name
-    pick_computer_name
-    pick_human_marker
-    pick_computer_marker
+    human.pick_name
+    computer.pick_name
+    human.pick_marker
+    computer.pick_marker(human.marker)
     display_names
     press_key_to_continue
   end
@@ -193,7 +346,7 @@ class TTTGame
         reset
         ask_who_goes_first
         display_stats
-        player_move
+        player_move(board)
         display_result
         press_key_to_continue
         increment_round
@@ -215,9 +368,9 @@ class TTTGame
     display_board
   end
 
-  def player_move
+  def player_move(board)
     loop do
-      current_player_moves
+      current_player_moves(board)
       break if board.someone_won? || board.full?
       clear_screen_and_display_board if human_turn?
     end
@@ -228,30 +381,6 @@ class TTTGame
     puts ""
   end
 
-  CHARS = ("a".."z").to_a + ("A".."Z").to_a + ("0".."9").to_a
-  def pick_human_name
-    puts "What is your name?"
-    player_name = nil
-    loop do
-      player_name = gets.chomp.to_s
-      break if (CHARS).to_a.include?(player_name.chars[0])
-      puts "Oops, must write your name."
-    end
-    human.name = player_name
-  end
-
-  def pick_computer_name
-    puts ""
-    puts "What is the name of the computer you will be playing against?"
-    computer_name = nil
-    loop do
-      computer_name = gets.chomp
-      break if (CHARS).to_a.include?(computer_name.chars[0])
-      puts "Oops, must write a valid name."
-    end
-    computer.name = computer_name
-  end
-
   def display_names
     puts ""
     puts "Welcome #{human.name}! You will be playing against #{computer.name}."
@@ -260,54 +389,9 @@ class TTTGame
     puts "First to three points wins!"
   end
 
-  def pick_human_marker
-    puts ""
-    puts "What would you like your marker to be? You can pick any character."
-    human_marker = nil
-    loop do
-      human_marker = gets.chomp
-
-      if human_marker.size != 1
-        puts "Oops! Must pick a single character."
-      elsif !(CHARS).to_a.include?(human_marker)
-        puts "Oops! Must pick a valid character (letter or number)."
-      end
-
-      break if human_marker.size == 1 && (CHARS).to_a.include?(human_marker)
-    end
-    human.marker = human_marker
-    puts "Success! You picked #{human.marker} as your own marker."
-  end
-
-  # rubocop:disable Layout/LineLength
-  def pick_computer_marker
-    puts ""
-    puts "What would you like the computer's marker to be? You can pick any character."
-    computer_marker = nil
-    loop do
-      computer_marker = gets.chomp
-
-      if computer_marker.size != 1
-        puts "Oops! Must pick a single character"
-      elsif !(CHARS).to_a.include?(computer_marker)
-        puts "Oops! Must pick a valid character (letter or number)."
-      elsif computer_marker == human.marker
-        puts "Oops! You've already picked that marker for yourself.
-        Pick another one."
-      end
-
-      break if (computer_marker.size == 1) &&
-               ((CHARS).to_a.include?(computer_marker)) &&
-               (computer_marker != human.marker)
-    end
-    computer.marker = computer_marker
-    puts "Success! You picked #{computer.marker} as the computer's marker."
-  end
-  # rubocop:enable Layout/LineLength
-
   def display_board
     puts ""
-    puts "You are #{human.marker}. Computer is #{computer.marker}"
+    puts "#{human.name} is #{human.marker}. #{computer.name} is #{computer.marker}"
     puts ""
     board.draw
     puts ""
@@ -323,10 +407,10 @@ class TTTGame
       puts "That's not a valid option... Type H or C."
     end
     puts ""
-    set_who_goes_first(answer)
+    who_goes_first(answer)
   end
 
-  def set_who_goes_first(answer)
+  def who_goes_first(answer)
     if answer == "h"
       puts "Great! #{human.name} will go first."
       @current_marker = HUMAN_MARKER
@@ -341,97 +425,12 @@ class TTTGame
     display_board
   end
 
-  def joinor(arr, delimiter=", ", word="or")
-    case arr.size
-    when 0 then ""
-    when 1 then arr[0]
-    when 2 then arr.join(" #{word}")
-    else
-      new_arr = arr
-      new_arr[-1] = "#{word} #{arr[-1]}"
-      new_arr.join(delimiter)
-    end
-  end
-
-  def human_moves
-    puts "Choose an available square: #{joinor(board.unmarked_keys)}"
-    # {board.unmarked_keys.join(', ')}"
-    square = nil
-    loop do
-      square = gets.chomp.to_i
-      break if board.unmarked_keys.include?(square)
-      puts "That's not a valid option... Choose a number 1 - 9."
-    end
-
-    board[square] = human.marker
-  end
-
-  def computer_moves
-    square = nil
-    # offensive
-    Board::WINNING_LINES.each do |line|
-      square = find_at_risk_square(line, computer.marker)
-      break if square
-    end
-
-    # defensive
-    if !square
-      Board::WINNING_LINES.each do |line|
-        square = find_at_risk_square(line, human.marker)
-        break if square
-      end
-    end
-
-    # pick square 5
-    if !square
-      square = 5 if board.squares[5].marker == Square::INITIAL_MARKER
-    end
-
-    # random sample
-    if !square
-      square = board.unmarked_keys.sample
-    end
-
-    board[square] = computer.marker
-  end
-
-  # rubocop:disable Layout/LineLength
-  def find_at_risk_square(line, marker)
-    squares_hash = board.squares.slice(*line)
-    markers = squares_hash.select { |_, v| v.marked? }.values.map(&:marker)
-    if markers.count(marker) == 2
-      squares_hash.select { |_, v| v.marker == Square::INITIAL_MARKER }.keys.first
-      # else
-      # nil
-    end
-  end
-  # rubocop:enable Layout/LineLength
-
-  # Board::WINNING_LINES.each do |line|
-  # squares_hash = board.squares.slice(*line)
-  # markers = squares_hash.select{ |_, v| v.marked? }.values.map(&:marker)
-  #   if markers.count(human.marker) == 2
-  #     next_key = squares_hash.select { |_, v|
-  #       v.marker == Square::INITIAL_MARKER }.keys.first
-  #     break if next_key
-  #   elsif markers.count(computer.marker) == 2
-  #     next_key = squares_hash.select { |_, v| v.marker ==
-  #       Square::INITIAL_MARKER }.keys.first
-  #   end
-
-  #   if !next_key
-  #     next_key = board.unmarked_keys.sample
-  #   end
-  # end
-  # board[next_key] = computer.marker
-  # end
-
-  def current_player_moves
+  def current_player_moves(board)
     if human_turn?
-      human_moves
+      human.moves(board)
       @current_marker = COMPUTER_MARKER
     else
-      computer_moves
+      computer.moves(board, human.marker)
       @current_marker = HUMAN_MARKER
     end
   end
@@ -441,6 +440,7 @@ class TTTGame
   end
 
   def display_result
+    clear
     display_board
     case board.winning_marker
     when human.marker
@@ -513,7 +513,6 @@ class TTTGame
 
   def reset
     board.reset
-    # @current_marker = FIRST_TO_MOVE
     clear
   end
 
@@ -527,13 +526,7 @@ class TTTGame
     puts "Let's play again!"
     puts ""
   end
-
-  # def reset_markers
-  #   pick_human_marker
-  #   pick_computer_marker
-  # end
 end
 
-# we'll kick off the game like this
 game = TTTGame.new
 game.play
