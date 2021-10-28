@@ -211,7 +211,7 @@ class Human < Player
 
   private
 
-  def joinor(arr, delimiter=", ", word="or")
+  def joinor(arr, delimiter=", ", word="or ")
     case arr.size
     when 0 then ""
     when 1 then arr[0]
@@ -336,7 +336,8 @@ class TTTGame
     human.pick_marker
     computer.pick_marker(human.marker)
     display_names
-    press_key_to_continue
+    # press_key_to_continue
+    sleep(1)
   end
 
   # rubocop:disable Metrics/MethodLength
@@ -348,7 +349,8 @@ class TTTGame
         display_stats
         player_move(board)
         display_result
-        press_key_to_continue
+        # press_key_to_continue
+        sleep(1)
         increment_round
         break if human.score == 3 || computer.score == 3
       end
