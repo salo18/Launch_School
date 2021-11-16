@@ -69,28 +69,53 @@
 # animalz = Animal.new
 # p animalz.public_method
 
-module Animal
-  class Dog
-    def bark
-      puts "woof"
-    end
+# module Animal
+#   class Dog
+#     def bark
+#       puts "woof"
+#     end
+#   end
+
+#   class Cat
+#     def meow
+#       puts "meow"
+#     end
+#   end
+
+#   def self.class_method
+#     puts "I'm a #{self}"
+#   end
+# end
+
+# bud = Animal::Dog.new
+# bud.bark
+# kitty = Animal::Cat.new
+# kitty.meow
+
+# Animal.class_method
+
+
+class GoodDog
+  attr_accessor :name, :height, :weight
+
+  def initialize(n, h, w)
+    @name = n
+    @height = h
+    @weight = w
   end
 
-  class Cat
-    def meow
-      puts "meow"
-    end
+  def change_info(n, h, w)
+    name = n
+    height = h
+    weight = w
   end
 
-  def self.class_method
-    puts "I'm a #{self}"
+  def info
+    "#{name} weighs #{weight} and is #{height} tall."
   end
 end
 
-bud = Animal::Dog.new
-bud.bark
-kitty = Animal::Cat.new
-kitty.meow
 
-Animal.class_method
-
+sparky = GoodDog.new('Spartacus', '12 inches', '10 lbs')
+sparky.change_info('Spartacus', '24 inches', '45 lbs')
+puts sparky.info 
