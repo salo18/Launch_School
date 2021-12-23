@@ -1,4 +1,7 @@
 redo:
 
 Easy 2:
-#10
+# 10
+
+Medium 1:
+# 2 
