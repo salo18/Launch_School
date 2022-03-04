@@ -51,3 +51,5 @@ get "/users/*" do
   @others = @load.keys.map(&:to_s) - [@user]
   erb :profiles
 end
+
+# test
