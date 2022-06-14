@@ -15,3 +15,6 @@
 // console.log(`Good morning ${name}`);
 
 
+let Input = require('readline-sync');
+let name = Input.question("What's your name?\n");
+console.log(`Hey ${name}`);
