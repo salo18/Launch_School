@@ -87,12 +87,12 @@
 
 // console.log('It took ' + String(tries) + ' tries to get a number greater than 2');
 
-// 6
-function factorial(number) {
-  if (number === 1) {
-    return 1;
-  }
+// // 6
+// function factorial(number) {
+//   if (number === 1) {
+//     return 1;
+//   }
 
-  return number * factorial(number - 1);
-}
+//   return number * factorial(number - 1);
+// }
 
