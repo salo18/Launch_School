@@ -59,13 +59,13 @@
 // let apples = 3;
 // let bananas = 3;
 // let areEqual = (apples === bananas);
-// // if (apples === bananas) {
-// //   console.log("That's true!");
-// // } else if (apples == bananas) {
-// //   console.log('they are equal but not strictly equal')
-// // } else {
-// //   console.log("Try again...");
-// // }
+// if (apples === bananas) {
+//   console.log("That's true!");
+// } else if (apples == bananas) {
+//   console.log('they are equal but not strictly equal')
+// } else {
+//   console.log("Try again...");
+// }
 
 // if areEqual {
 //   console.log("That's true!");
