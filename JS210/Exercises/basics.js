@@ -49,11 +49,97 @@
 // console.log(`${num1} / ${num2} = ${num1/num2}`);
 // console.log(`${num1} ** ${num2} = ${num1**num2}`);
 
-// 6
-const sync = require("readline-sync");
+// // 6
+// const sync = require("readline-sync");
 
-console.log(`Enter a phrase`);
-let ogPhrase = sync.prompt()
-let phrase = ogPhrase.match(/[A-Z]/gi).length;
+// console.log(`Enter a phrase`);
+// let ogPhrase = sync.prompt()
+// let phrase = ogPhrase.match(/[A-Z]/gi).length;
 
-console.log(`There are ${phrase} characters in ${ogPhrase}`);
+// console.log(`There are ${phrase} characters in ${ogPhrase}`);
+// alternate solution
+// const prompt = require("prompt-sync")
+// const input = prompt('enter a phrase:');
+// const numChar = String(input.length);
+// console.log(`There are ${numChar} characters in ${input}`);
+
+// // 7
+// const DIGITS = {
+//   '0': 0, '1': 1, '2': 2, '3': 3, '4': 4,
+//   '5': 5, '6': 6, '7': 7, '8': 8, '9': 9,
+// };
+
+// let stringToInteger = string => {
+//   let value = 0;
+//   const numbers = stringToNumbers(string)
+//   for (let i = 0; i < numbers.length; i += 1) {
+//     value = (10 * value) + numbers[i];
+//   }
+
+//   console.log(value);
+// }
+
+// let stringToNumbers = string => {
+//   const result = [];
+
+//   for (let i = 0; i < string.length; i += 1) {
+//     result.push(DIGITS[string[i]]);
+//   }
+
+//   return result;
+// }
+// // stringToInteger('4321');      // 4321
+// // stringToInteger('570');       // 570
+
+// // 8
+
+// let stringToSignedInteger = string => {
+//   if (string[0] === '-') {
+//     return -stringToInteger(string.slice(1));
+//   } else if (string[0] === '+') {
+//     return stringToInteger(string.slice(1));
+//   } else {
+//     return stringToInteger(string);
+//   }
+// }
+
+
+// stringToSignedInteger('4321');      // 4321
+// stringToSignedInteger('-570');      // -570
+// stringToSignedInteger('+100');      // 100
+
+// // 9
+// const DIGITS = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+
+// function integerToString(number) {
+//   let result = '';
+
+//   do {
+//     let remainder = number % 10;
+//     number = Math.floor(number / 10);
+
+//     result = DIGITS[remainder] + result;
+//   } while (number > 0);
+
+//   return result;
+// }
+// // integerToString(4321);      // "4321"
+// // integerToString(0);         // "0"
+// // integerToString(5000);      // "5000"
+
+// // 10
+// let signedIntegerToString = num => {
+//   if (num > 0) {
+//     console.log('+' + integerToString(num));
+//   } else if (num < 0) {
+//     console.log('-' + integerToString(-num));
+//   } else if (num === 0) {
+//     console.log("0");
+//   }
+// }
+
+
+// signedIntegerToString(4321);      // "+4321"
+// signedIntegerToString(-123);      // "-123"
+// signedIntegerToString(0);         // "0"
+
