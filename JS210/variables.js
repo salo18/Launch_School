@@ -271,24 +271,24 @@ line 11 again logs 'outer' which shows that the variable declaration and initial
 // console.log(increment); // 15
 
 // 11
-let a = 'outer';
+// let a = 'outer';
 
-console.log(a); // outer
-setScope();
-console.log(a); // inner -- a is reassigned when the function is invoked
+// console.log(a); // outer
+// setScope();
+// console.log(a); // inner -- a is reassigned when the function is invoked
 
-var setScope = function () {
-  a = 'inner';
-};
+// var setScope = function () {
+//   a = 'inner';
+// };
 
-// after hoisting
-var setScope;
-let a;
-a = outer;
-console.log(a);
-setScope();
-console.log(a);
+// // after hoisting
+// var setScope;
+// let a;
+// a = outer;
+// console.log(a);
+// setScope();
+// console.log(a);
 
-setScope = function () {
-  a = 'inner';
-};
+// setScope = function () {
+//   a = 'inner';
+// };
