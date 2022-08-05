@@ -348,5 +348,3 @@ pedac
 # # repeat('abc', '  ');    #// undefined
 
 # 16
-
-
