@@ -197,3 +197,319 @@
 
 
 // TOTAL SQUARE AREA:
+// Pedac
+// area = height * width
+// need to find the total area of each square -- map to a new array
+// add up the values of all the arrays -- reduce / forEach
+
+// let rectangles = [[3, 4], [6, 6], [1, 8], [9, 9], [2, 2]];
+
+// function totalSquareArea(arr) {
+//   let squares = arr.filter(a => a[0] === a[1]);
+//   return totalArea(squares);
+//   // return areas.reduce((result, value) => result + value);
+// }
+
+// function totalArea(arr) {
+//   let areas = arr.map(([el1, el2]) => el1 * el2);
+
+//   return areas.reduce((result, value) => result + value);
+// }
+// // console.log(totalArea(rectangles));    // 141
+
+// console.log(totalSquareArea(rectangles));    // 121
+
+
+// PROCESSING RELEASES:
+// PEDAC:
+// input -- object /// output -- array of objects
+// only include id and title keys
+// id (if exists) is > 0 and title (if exists) is non empty string
+// keep objects that have both id and title
+
+// let newReleases = [
+//   {
+//     'id': 0,
+//     'title': 'Die Hard',
+//     'boxart': 'http://cdn-0.nflximg.com/images/2891/DieHard.jpg',
+//     'uri': 'http://api.netflix.com/catalog/titles/movies/70111470',
+//     'rating': [4.0],
+//     'bookmark': [],
+//   },
+//   {
+//     'id': 654356453,
+//     'boxart': 'http://cdn-0.nflximg.com/images/2891/BadBoys.jpg',
+//     'uri': 'http://api.netflix.com/catalog/titles/movies/70111470',
+//     'rating': [5.0],
+//     'bookmark': [{ id:432534, time:65876586 }],
+//   },
+//   {
+//     'title': 'The Chamber',
+//     'boxart': 'http://cdn-0.nflximg.com/images/2891/TheChamber.jpg',
+//     'uri': 'http://api.netflix.com/catalog/titles/movies/70111470',
+//     'rating': [4.0],
+//     'bookmark': [],
+//   },
+//   {
+//     'id': 675465,
+//     'title': 'Fracture',
+//     'boxart': 'http://cdn-0.nflximg.com/images/2891/Fracture.jpg',
+//     'uri': 'http://api.netflix.com/catalog/titles/movies/70111470',
+//     'rating': [5.0],
+//     'bookmark': [{ id:432534, time:65876586 }],
+//   },
+// ];
+
+// function processReleaseData(data) {
+//   return data.filter(obj => obj['id'] !== undefined && obj['title'])
+//               .map(obj => {
+//                 return {
+//                   id: obj.id,
+//                   title: obj.title,
+//                 };
+//               });
+// }
+
+// console.log(processReleaseData(newReleases)); // array of objects
+
+// // should return:
+// // [{ id: 70111470, title: 'Die Hard'}, { id: 675465, title: 'Fracture' }];
+
+
+
+// OCTAL:
+// Pedac
+// octal to decimal conversion
+// if string representation of octal number, convert to decimal
+
+// break string up into individual elements
+// iterate over the string
+  // count backwards to get the powers integer going to zero
+// add up all the arrays
+
+// function octalToDecimal(numberString) {
+//   let numArr = numberString.split('');
+//   let arr = [];
+//   let reverse = numArr.length - 1;
+//   for (let i = 0; i < numArr.length; i += 1) {
+//     arr.push(Number(numArr[i]) * Math.pow(8, reverse));
+//     reverse -= 1;
+//   }
+
+//   let num = arr.reduce((total, value) => total + value);
+//   console.log(num);
+// }
+
+// octalToDecimal('1');           // 1
+// octalToDecimal('10');          // 8
+// octalToDecimal('130');         // 88
+// octalToDecimal('17');          // 15
+// octalToDecimal('2047');        // 1063
+// octalToDecimal('011');         // 9
+
+// ANAGRAMS:
+// PEDAC:
+// return new array of words that are anagrams of the word argument
+// anagram is a word that shares all same letters as other word
+
+// function anagram(word, list) {
+//   return list.filter(w => areAnagrams(w, word));
+
+// }
+
+// function areAnagrams(str1, str2) {
+//   return String([...str1].sort()) === String([...str2].sort());
+// }
+
+// console.log(anagram('listen', ['enlists', 'google', 'inlets', 'banana']));  // [ "inlets" ]
+// // anagram('listen', ['enlist', 'google', 'inlets', 'banana']);   // [ "enlist", "inlets" ]
+
+
+// FORMATTING BANDS:
+// PEDAC
+// need to reformat the array of objects
+// change country to canada
+// capitalize band names
+// remove all dots from band names
+// return new array of objects
+// map the array
+
+// let bands = [
+//   { name: 'sunset rubdown', country: 'UK', active: false },
+//   { name: 'women', country: 'Germany', active: false },
+//   { name: 'a silver mt. zion', country: 'Spain', active: true },
+// ];
+
+// function processBands(data) {
+//   // let newObj = []
+//   // data.forEach(el => {
+//   //   el.name = el.name.split(' ').map(x => x[0].toUpperCase() + x.slice(1)).join(' ').replace('.', '');
+//   //   el.country = "Canada";
+//   //   newObj.push(el);
+//   // });
+//   // return newObj;
+
+//   return data.map(el => {
+//     return {
+//       name: el.name.split(' ').map(x => x[0].toUpperCase() + x.slice(1)).join(' ').replace('.', ''),
+//       country: el.country = 'Canada',
+//       active: el.active,
+//     };
+//   })
+// }
+
+// console.log(processBands(bands));
+
+// // should return:
+// // [
+// //   { name: 'Sunset Rubdown', country: 'Canada', active: false },
+// //   { name: 'Women', country: 'Canada', active: false },
+// //   { name: 'A Silver Mt Zion', country: 'Canada', active: true },
+// // ]
+
+// CLASS RECORDS:
+
+// let studentScores = {
+//   student1: {
+//     id: 123456789,
+//     scores: {
+//       exams: [90, 95, 100, 80],
+//       exercises: [20, 15, 10, 19, 15],
+//     },
+//   },
+//   student2: {
+//     id: 123456799,
+//     scores: {
+//       exams: [50, 70, 90, 100],
+//       exercises: [0, 15, 20, 15, 15],
+//     },
+//   },
+//   student3: {
+//     id: 123457789,
+//     scores: {
+//       exams: [88, 87, 88, 89],
+//       exercises: [10, 20, 10, 19, 18],
+//     },
+//   },
+//   student4: {
+//     id: 112233445,
+//     scores: {
+//       exams: [100, 100, 100, 100],
+//       exercises: [10, 15, 10, 10, 15],
+//     },
+//   },
+//   student5: {
+//     id: 112233446,
+//     scores: {
+//       exams: [50, 80, 60, 90],
+//       exercises: [10, 0, 10, 10, 0],
+//     },
+//   },
+// };
+
+// function generateClassRecordSummary(scores) {
+//   let data = Object.entries(scores);
+
+//   let averageExamScores = findExamAverage(data);
+
+//   let letterGrades = convertScoresGrades(averageExamScores);
+
+//   let classExams = buildClassExams(data);
+
+//   let averageMinMax = buildAverageMinMax(classExams);
+
+//   return {
+//     studentGrades: letterGrades,
+//     exams: averageMinMax,
+//   }
+// }
+
+// function findExamAverage(data) {
+//   return data.map(student => {
+//     let examAvg = student[1].scores.exams.reduce((total, value) => total + value) / student[1].scores.exams.length * .65;
+
+//     let exerciseAvg = student[1].scores.exercises.reduce((total, value) => total + value) *.35;
+
+//     return examAvg + exerciseAvg;
+//   });
+// }
+
+// function convertScoresGrades(averages) {
+//   return averages.map(score => {
+//     let rounded = Math.ceil(score);
+
+//     if (rounded >= 93) {
+//       return `${rounded} (A)`;
+//     } else if (rounded >= 85 && rounded <= 92) {
+//       return `${rounded} (B)`;
+//     } else if (rounded >= 77 && rounded <= 84) {
+//       return `${rounded} (C)`;
+//     } else if (rounded >= 69 && rounded <= 76) {
+//       return `${rounded} (D)`;
+//     } else if (rounded >= 60 && rounded <= 68) {
+//       return `${rounded} (E)`;
+//     } else if (rounded >= 0 && rounded <= 59) {
+//       return `${rounded} (F)`;
+//     }
+//   });
+// }
+
+// function buildClassExams(data) {
+//   let exams = [[], [], [], []];
+
+//   for (let i = 0; i <= 3; i += 1) {
+//     for (let j = 0; j < data.length; j += 1) {
+//       exams[i].push(data[j][1].scores.exams[i])
+//     }
+//   }
+
+//   return exams;
+// }
+
+// function buildAverageMinMax(data) { // return array of objects
+//   return data.map(exam => {
+//     return {
+//       average: exam.reduce((total, value) => total+value)/data[0].length,
+//       minimum: Math.min(...exam),
+//       maximum: Math.max(...exam),
+//     }
+//   });
+// }
+
+// console.log(generateClassRecordSummary(studentScores));
+
+// // returns:
+// // {
+// //   studentGrades: [ '87 (B)', '73 (D)', '84 (C)', '86 (B)', '56 (F)' ],
+// //   exams: [
+// //     { average: 75.6, minimum: 50, maximum: 100 },
+// //     { average: 86.4, minimum: 70, maximum: 100 },
+// //     { average: 87.6, minimum: 60, maximum: 100 },
+// //     { average: 91.8, minimum: 80, maximum: 100 },
+// //   ],
+// // }
+
+
+
+// ALL UNIQUE LETTERS
+function isAllUnique(string) {
+  let arr = string.toLowerCase().split('');
+
+  let result = [];
+
+  for (let i = 0; i < arr.length; i += 1) {
+    if (!result.includes(arr[i])) {
+      result.push(arr[i]);
+    } else {
+      return false;
+    }
+  }
+  return true;
+}
+
+console.log(isAllUnique('The quick brown fox jumped over a lazy dog'));  // false
+console.log(isAllUnique('123,456,789'));                                 // false
+console.log(isAllUnique('The big apple'));                               // false
+console.log(isAllUnique('The big apPlE'));                               // false
+console.log(isAllUnique('!@#$%^&*()'));                                  // true
+console.log(isAllUnique('abcdefghijklmnopqrstuvwxyz'));                  // true
