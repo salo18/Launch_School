@@ -492,24 +492,38 @@
 
 
 // ALL UNIQUE LETTERS
-function isAllUnique(string) {
-  let arr = string.toLowerCase().split('');
+// function isAllUnique(string) {
+//   let arr = string.toLowerCase().split('');
 
-  let result = [];
+//   let result = [];
 
-  for (let i = 0; i < arr.length; i += 1) {
-    if (!result.includes(arr[i])) {
-      result.push(arr[i]);
-    } else {
-      return false;
-    }
-  }
-  return true;
-}
+//   for (let i = 0; i < arr.length; i += 1) {
+//     if (!result.includes(arr[i])) {
+//       result.push(arr[i]);
+//     } else {
+//       return false;
+//     }
+//   }
+//   return true;
+// }
 
-console.log(isAllUnique('The quick brown fox jumped over a lazy dog'));  // false
-console.log(isAllUnique('123,456,789'));                                 // false
-console.log(isAllUnique('The big apple'));                               // false
-console.log(isAllUnique('The big apPlE'));                               // false
-console.log(isAllUnique('!@#$%^&*()'));                                  // true
-console.log(isAllUnique('abcdefghijklmnopqrstuvwxyz'));                  // true
+// console.log(isAllUnique('The quick brown fox jumped over a lazy dog'));  // false
+// console.log(isAllUnique('123,456,789'));                                 // false
+// console.log(isAllUnique('The big apple'));                               // false
+// console.log(isAllUnique('The big apPlE'));                               // false
+// console.log(isAllUnique('!@#$%^&*()'));                                  // true
+// console.log(isAllUnique('abcdefghijklmnopqrstuvwxyz'));                  // true
+
+// function iterate(array, callback) {
+//   for (let i = 0; i < array.length; i += 1) {
+//     callback(array[i]);
+//   }
+// }
+
+// let methods = {
+//    foo: function () {
+//      console.log('hello');
+//    },
+// };
+
+// iterate([1, 2, 3], methods.foo);
