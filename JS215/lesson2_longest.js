@@ -47,12 +47,14 @@ let longText = 'Four score and seven years ago our fathers brought forth' +
   ' earth.';
 
 function longestSentence(text) {
-  let sentences = text.split(/\.|\?|!/);
+  // let sentences = text.split(/\.|\?|!/);
+  let sentences = text.match(/\w[^.!?]*?[.!?]/g);
+  console.log(sentences);
   let sorted = sentences.sort((a, b) => b.length - a.length);
   let longest = sorted[0];
   let wordCount = longest.split(' ').filter(word => word.length > 0).length;
-  console.log(longest);
-  console.log(`The longest sentence has ${wordCount} words.`);
+  // console.log(longest);
+  // console.log(`The longest sentence has ${wordCount} words.`);
 }
 
 longestSentence(longText);
@@ -70,3 +72,12 @@ longestSentence(longText);
 // Four score and seven years ago our fathers brought forth on this continent a new nation, conceived in liberty, and dedicated to the proposition that all men are created equal.
 
 // The longest sentence has 30 words.
+
+
+function foo(list) {
+  return list.map(function (word) {
+      return word.match(/[aeiou]/i) || [];
+    });
+}
+
+console.log(foo(['cart', 'truck', 'cart', 'train']));
