@@ -1,15 +1,29 @@
 
 /*
------------------------INSTRUCTIONS--------------------------------------
 --------------------------PROBLEM----------------------------------------
-Questions:
 Input:
 Output:
+Questions?
 ---------------------------RULES-----------------------------------------
 Explicit:
 Implicit:
 --------------------------EXAMPLES---------------------------------------
 ----------------------------ALGO-----------------------------------------
+
+
+Questions:
+- should the function modify the caller?
+
+Edge cases:
+- empty input: null, empty string, empty array etc
+- boundary conditions
+- repeat or duplicate values
+- data type specific considerations
+  - strings -- case sensitive?
+- worry about failure or bad input?
+  - need to validate input?
+  - how to respond to bad input?
+
 */
 
 
@@ -195,7 +209,6 @@ function possiblePalindrome(str) {
   var oddsCount = 0;
 
   var charKeys = Object.keys(charCounts);
-  // console.log(charKeys); // [ 'b', 'a' ]
   for (var i = 0, len = charKeys.length; i < len; i += 1) {
     console.log(charCounts[charKeys[i]]);
     if (charCounts[charKeys[i]] % 2 === 1) {
