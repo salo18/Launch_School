@@ -265,90 +265,90 @@ Edge cases:
 - if a position is greater than the other, break the loop and return the appropriate value
 */
 
-function compareVersions(v1, v2) {
-  if (/\.\./.test(v1) || /\.\./.test(v2)) {
-    return null;
-  } else if (/[^0-9.]/.test(v1) || /[^0-9.]/.test(v2)) {
-    return null;
-  } else if (/^\.[0-9]/.test(v1) || /^\.[0-9]/.test(v2)) {
-    return null;
-  } else if (/[0-9]\.$/.test(v1) || /[0-9]\.$/.test(v2)) {
-    return null;
-  }
+// function compareVersions(v1, v2) {
+//   if (/\.\./.test(v1) || /\.\./.test(v2)) {
+//     return null;
+//   } else if (/[^0-9.]/.test(v1) || /[^0-9.]/.test(v2)) {
+//     return null;
+//   } else if (/^\.[0-9]/.test(v1) || /^\.[0-9]/.test(v2)) {
+//     return null;
+//   } else if (/[0-9]\.$/.test(v1) || /[0-9]\.$/.test(v2)) {
+//     return null;
+//   }
 
-  let arr1 = v1.split('');
-  let arr2 = v2.split('');
-  let len1 = arr1.length;
-  let len2 = arr2.length;
+//   let arr1 = v1.split('');
+//   let arr2 = v2.split('');
+//   let len1 = arr1.length;
+//   let len2 = arr2.length;
 
-  if (len1 === 1 && len2 === 1) {
-    if (arr1[0] === arr2[0]) {
-      return 0;
-    } else if (arr1[0] > arr2[0]) {
-      return 1;
-    } else if (arr1[0] < arr2[0]) {
-      return -1;
-    }
-  }
+//   if (len1 === 1 && len2 === 1) {
+//     if (arr1[0] === arr2[0]) {
+//       return 0;
+//     } else if (arr1[0] > arr2[0]) {
+//       return 1;
+//     } else if (arr1[0] < arr2[0]) {
+//       return -1;
+//     }
+//   }
 
-  let lengthDifference;
+//   let lengthDifference;
 
-  if (len1 > len2) {
-    lengthDifference = Math.abs(len1 - len2);
-    for (let i = 1; i < lengthDifference; i += 1) {
-      arr2.push('.');
-      arr2.push('0');
-    }
-  } else if (len2 > len1) {
-    lengthDifference = Math.abs(len1 - len2);
-    for (let i = 1; i < lengthDifference; i += 1) {
-      arr1.push('.');
-      arr1.push('0');
-    }
-  }
+//   if (len1 > len2) {
+//     lengthDifference = Math.abs(len1 - len2);
+//     for (let i = 1; i < lengthDifference; i += 1) {
+//       arr2.push('.');
+//       arr2.push('0');
+//     }
+//   } else if (len2 > len1) {
+//     lengthDifference = Math.abs(len1 - len2);
+//     for (let i = 1; i < lengthDifference; i += 1) {
+//       arr1.push('.');
+//       arr1.push('0');
+//     }
+//   }
 
-  let maxLength = Math.max(arr1.length, arr2.length);
+//   let maxLength = Math.max(arr1.length, arr2.length);
 
-  for (let i = 0; i < maxLength; i += 1) {
-    //  console.log('arr1 is', arr1[i]);
-    //  console.log('arr2 is', arr2[i]);
+//   for (let i = 0; i < maxLength; i += 1) {
+//     //  console.log('arr1 is', arr1[i]);
+//     //  console.log('arr2 is', arr2[i]);
 
-     while (arr1[i] !== arr2[i]) {
-      if (arr1[i] > arr2[i] && arr1[i] !== '.' && arr2[i] !== '.') {
-        return 1;
-      } else if (arr1[i] < arr2[i] && arr1[i] !== '.' && arr2[i] !== '.') {
-        return -1;
-      } else if (arr1[i] === arr2[i] && arr1[i] !== '.' && arr2[i] !== '.') {
-        return 0;
-      }
-    }
-  }
+//      while (arr1[i] !== arr2[i]) {
+//       if (arr1[i] > arr2[i] && arr1[i] !== '.' && arr2[i] !== '.') {
+//         return 1;
+//       } else if (arr1[i] < arr2[i] && arr1[i] !== '.' && arr2[i] !== '.') {
+//         return -1;
+//       } else if (arr1[i] === arr2[i] && arr1[i] !== '.' && arr2[i] !== '.') {
+//         return 0;
+//       }
+//     }
+//   }
 
-  return 0;
-}
+//   return 0;
+// }
 
-// console.log(compareVersions('1', '1.0') === 0); // happy path
-// console.log(compareVersions('0.1', '1.0') === -1); // happy path
-// console.log(compareVersions('3.2.3', '3.2.0') === 1); // happy path
-// console.log(compareVersions('1.2', '1.2.0.0') === 0); // happy path
-// console.log(compareVersions('0.1!', '1.0') === null); // invalid character
-// console.log(compareVersions('1.a', '1.0') === null); // invalid character
-// console.log(compareVersions('0.1', '1..0') === null); // too many periods
-// console.log(compareVersions('0.1', '') === null); // empty string input
-// console.log(compareVersions('0.1', '1.0', '2.0') === null); // more than two inputs?
-// console.log(compareVersions('0.1', '1.123.1') === null); // version number larger than 2 digits?
-// console.log(compareVersions('.1', '1.') === null); // invalid inputs
+// // console.log(compareVersions('1', '1.0') === 0); // happy path
+// // console.log(compareVersions('0.1', '1.0') === -1); // happy path
+// // console.log(compareVersions('3.2.3', '3.2.0') === 1); // happy path
+// // console.log(compareVersions('1.2', '1.2.0.0') === 0); // happy path
+// // console.log(compareVersions('0.1!', '1.0') === null); // invalid character
+// // console.log(compareVersions('1.a', '1.0') === null); // invalid character
+// // console.log(compareVersions('0.1', '1..0') === null); // too many periods
+// // console.log(compareVersions('0.1', '') === null); // empty string input
+// // console.log(compareVersions('0.1', '1.0', '2.0') === null); // more than two inputs?
+// // console.log(compareVersions('0.1', '1.123.1') === null); // version number larger than 2 digits?
+// // console.log(compareVersions('.1', '1.') === null); // invalid inputs
 
-console.log(compareVersions('1', '1'));            // 0
-console.log(compareVersions('1.1', '1.0'));        // 1
-console.log(compareVersions('2.3.4', '2.3.5'));    // -1
-console.log(compareVersions('1.a', '1'));          // null
-console.log(compareVersions('.1', '1'));           // null
-console.log(compareVersions('1.', '2'));           // null
-console.log(compareVersions('1..0', '2.0'));       // null
-console.log(compareVersions('1.0', '1.0.0'));      // 0
-console.log(compareVersions('1.0.0', '1.1'));      // -1
-console.log(compareVersions('1.0', '1.0.5'));      // -1
+// console.log(compareVersions('1', '1'));            // 0
+// console.log(compareVersions('1.1', '1.0'));        // 1
+// console.log(compareVersions('2.3.4', '2.3.5'));    // -1
+// console.log(compareVersions('1.a', '1'));          // null
+// console.log(compareVersions('.1', '1'));           // null
+// console.log(compareVersions('1.', '2'));           // null
+// console.log(compareVersions('1..0', '2.0'));       // null
+// console.log(compareVersions('1.0', '1.0.0'));      // 0
+// console.log(compareVersions('1.0.0', '1.1'));      // -1
+// console.log(compareVersions('1.0', '1.0.5'));      // -1
 
 
 
@@ -370,3 +370,111 @@ Write a function called doubler that doubles every value in an array
 
 
 */
+
+
+// PROBLEM 1
+/*
+Write a program that cleans up user-entered phone numbers so that they can be sent as SMS messages. Other than digits, the number may also contain special character such as spaces, dash, dot, and parentheses that should be ignored.
+
+If the phone number is less than 10 digits, assume that it is a bad number.
+If the phone number is 10 digits, assume that it is good.
+If the phone number is 11 digits and the first number is 1, trim the 1 and use the last 10 digits.
+If the phone number is 11 digits and the first number is not 1, then it is a bad number.
+If the phone number is more than 11 digits, assume that it is a bad number.
+For bad numbers, just a return a string of 10 0s.
+
+--------------------------PROBLEM-------------------
+- sanitize a user phone number
+
+------------ **Explicit Requirements** -------------
+Rules:
+- number less than ten digits are invalid
+- number with 10 digits is valid
+- number with 11 digits is valid if it starts with a 1 - use the remaining ten digits
+  - number with 11 digits not starting with 1 is invalid
+- number with more than 11 digits is invalid
+- ignore any special characters - space, dash, dot and parenthesis
+
+Inputs:
+- a string containing x amount of digits and x amount of special characters to ignore
+
+Output:
+- return the sanitized number
+- if its an invalid number, return a string of 10 0's
+
+------------ **Implicit Requirements** -------------
+- duplicate numbers are allowed
+- special characters ignored
+
+------------- **Clarifying Questions** -------------
+- is the input going to be a string or a number?
+- digits means you don't have to worry about decimals
+- problem states that the input contains digits and special characters -- can I assume that letters won't be included?
+- what to do with empty input?
+
+
+------------ Examples/Test Cases/Edge Cases ------------
+Happy path:
+sanitize('123-456-7890') === '1234567890'
+sanitize('1-123-456-7890') === '1234567890' // first 1 is ignored
+sanitize('1-123-4!5.6-(7890)') === '1234567890' // first 1 is ignored
+sanitize('-123-456-7890') === '1234567890' // first number of 11 digit number is not 1
+
+Edge Cases:
+sanitize('2-123-456-7890') === '0000000000' // first number of 11 digit number is not 1
+sanitize('s23-456-7890') === '0000000000' // non digit character is invalid
+sanitize('s123-456-7890') === '0000000000' // non digit character is invalid
+sanitize('456-7890') === '0000000000' // number less than ten digits is invalid
+sanitize('') === '0000000000' // empty string is invalid
+sanitize('2-111123-456-7890') === '0000000000' // number longer than 11 digits
+
+-------------------- Algorithm ---------------------
+- conver the string into an array of characters
+- filter the array for just digits
+- if the array is longer than 11 or shorter than 10, invalid
+- if the array is 11 digits, check if it starts with 1 -- if not invalid
+- return either the characters in the array converted to a string or 10 0's
+*/
+
+// function sanitize(str) {
+//   let arr = str.split('');
+//   let filtered = arr.filter(x => /\d/.test(x));
+
+//   if (/[a-zA-Z]/.test(str)) {
+//     return '0000000000';
+//   }
+
+//   if (filtered.length > 11 || filtered.length < 10) {
+//     return '0000000000';
+//   }
+
+//   let resultEleven = [];
+
+//   if (filtered.length === 11 && filtered[0] !== '1') {
+//       return '0000000000';
+//   } else if (filtered.length === 10) {
+//       return filtered.join('');
+//   } else if (filtered.length === 11) {
+//     for (let i = 1; i < filtered.length; i += 1) {
+//       resultEleven.push(filtered[i]);
+//     }
+//     return resultEleven.join('');
+//   }
+
+// }
+
+// // console.log(sanitize('123-456-7890')=== '1234567890');
+// console.log(sanitize('1-123-456-7890')  === '1234567890'); // first 1 is ignored
+// console.log(sanitize('1-123-4!5.6-(7890)') === '1234567890'); // first 1 is ignored
+// // console.log(sanitize('-123-456-7890') === '1234567890'); // first number of 11 digit number is not 1
+
+// console.log(sanitize('2-123-456-7890') === '0000000000'); // first number of 11 digit number is not 1
+// console.log(sanitize('s23-456-7890') === '0000000000'); // non digit character is invalid
+// console.log(sanitize('s123-456-7890') === '0000000000'); // non digit character is invalid
+// console.log(sanitize('456-7890') === '0000000000'); // number less than ten digits is invalid
+// console.log(sanitize('') === '0000000000'); // empty string is invalid
+// console.log(sanitize('2-111123-456-7890') === '0000000000'); // number longer than 11 digits
+
+
+
+// PROBLEM 2
