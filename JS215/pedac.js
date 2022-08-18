@@ -15,14 +15,41 @@ Questions:
 - should the function modify the caller?
 
 Edge cases:
-- empty input: null, empty string, empty array etc
+- inputs
+  - empty input: null, empty string, empty array etc
+  - can the function handle different types of inputs? numbers, strings, booleans, objects?
+  - what about multiple arguments if we are only expecting one?
+- special values
+  - numbers
+    - does it work with zero, negative numbers, fractional numbers (0.567) or special values (NaN, Infinity)?
+  - arrays
+    - does it work with a sparse array [1, , 2] or an array with an object property [1, 2, a: "A"]
+    - array elements
+      - what if the array elements are booleans, null / undefined, empty objects, functions, regex, NaN, Infinity, -Infinity?
+    - should non-primitive elements have their reference duplicated or their value?
+    - what about elements that appear more than once?
+    - what about nested arrays or objects?
+    - how to treat empty slots of a sparse array
+    - what about object properties?
+    - what about an empty array?
+    - what if the argument is a string, number or object instead of array?
+  - strings
+    - is it case sensitive?
+- valid inputs
+  - what should we consider as invalid input and what to do with them?
+  - should we return a specific value like null or undefined if the input is invalid?
 - boundary conditions
 - repeat or duplicate values
-- data type specific considerations
-  - strings -- case sensitive?
 - worry about failure or bad input?
+  - what do we do if an input has been omitted?
+    - issue an error message?
+    - return a specific value?
+    - set that input to a default value and execute the function normally?
   - need to validate input?
   - how to respond to bad input?
+
+
+
 
 */
 

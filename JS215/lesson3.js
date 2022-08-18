@@ -193,3 +193,180 @@ SPACES
 
 
 // COMPARING VERSION NUMBERS
+/*
+Legal version numbers
+1
+1.0
+1.2
+3.2.3
+3.0.0
+4.2.3.0
+
+Write a function that takes any two version numbers in this format and compares them, with the result of this comparison showing whether the first is less than, equal to, or greater than the second version:
+
+If version1 > version2, we should return 1.
+If version1 < version2, we should return -1.
+If version1 === version2, we should return 0.
+If either version number contains characters other than digits and the . character, we should return null.
+
+
+--------------------------PROBLEM----------------------------------------
+Input:
+- two version numbers containing numbers and .
+Output:
+- if v1 > v2 === 1
+- if v1 < v2 === -1
+- if v1 === v2 === 0
+- null - characters other than digits and .
+
+Questions?
+- are version numbers always two digits?
+  - is 1.123.1 valid?
+- do we need to deal with too many periods? 1..0.1?
+- what about empty string inputs?
+- what about more than two inputs?
+
+
+---------------------------RULES-----------------------------------------
+Explicit:
+- version numbers are separated by a period (only one period, not multiple)
+- any character other than a number or . is invalid and returns null
+
+Implicit:
+- 1 and 1.0 are the same
+- 1 < 1.1
+- 1 and 1.0.0.0 are the same
+
+- compare the version numbers by decimal place 'position'
+  - compare numbers to the left of the .
+  - 0.1 < 1 // 0 < 1
+  - if the first position is the same, continue to the second position
+    - 1.0 === 1.0.0.0
+    - it doesn't matter if there are more positions so long as the numbers are the same
+  -
+--------------------------EXAMPLES---------------------------------------
+0.1 < 1 = 1.0 < 1.1 < 1.2 = 1.2.0.0 < 1.18.2 < 13.37
+
+Edge cases:
+- empty input: null, empty string, empty array etc
+- boundary conditions
+- repeat or duplicate values
+- data type specific considerations
+  - strings -- case sensitive?
+- worry about failure or bad input?
+  - need to validate input?
+  - how to respond to bad input?
+----------------------------ALGO-----------------------------------------
+- convert each input string into an array of numbers
+- find the length of the longest array
+- if the arrays are not equal size, 'pad' the shortest array to include x amount of 0 elements to enable a continuous comparison
+- iterate over the longest array
+- compare the indexes of each array
+- if a position is greater than the other, break the loop and return the appropriate value
+*/
+
+function compareVersions(v1, v2) {
+  if (/\.\./.test(v1) || /\.\./.test(v2)) {
+    return null;
+  } else if (/[^0-9.]/.test(v1) || /[^0-9.]/.test(v2)) {
+    return null;
+  } else if (/^\.[0-9]/.test(v1) || /^\.[0-9]/.test(v2)) {
+    return null;
+  } else if (/[0-9]\.$/.test(v1) || /[0-9]\.$/.test(v2)) {
+    return null;
+  }
+
+  let arr1 = v1.split('');
+  let arr2 = v2.split('');
+  let len1 = arr1.length;
+  let len2 = arr2.length;
+
+  if (len1 === 1 && len2 === 1) {
+    if (arr1[0] === arr2[0]) {
+      return 0;
+    } else if (arr1[0] > arr2[0]) {
+      return 1;
+    } else if (arr1[0] < arr2[0]) {
+      return -1;
+    }
+  }
+
+  let lengthDifference;
+
+  if (len1 > len2) {
+    lengthDifference = Math.abs(len1 - len2);
+    for (let i = 1; i < lengthDifference; i += 1) {
+      arr2.push('.');
+      arr2.push('0');
+    }
+  } else if (len2 > len1) {
+    lengthDifference = Math.abs(len1 - len2);
+    for (let i = 1; i < lengthDifference; i += 1) {
+      arr1.push('.');
+      arr1.push('0');
+    }
+  }
+
+  let maxLength = Math.max(arr1.length, arr2.length);
+
+  for (let i = 0; i < maxLength; i += 1) {
+    //  console.log('arr1 is', arr1[i]);
+    //  console.log('arr2 is', arr2[i]);
+
+     while (arr1[i] !== arr2[i]) {
+      if (arr1[i] > arr2[i] && arr1[i] !== '.' && arr2[i] !== '.') {
+        return 1;
+      } else if (arr1[i] < arr2[i] && arr1[i] !== '.' && arr2[i] !== '.') {
+        return -1;
+      } else if (arr1[i] === arr2[i] && arr1[i] !== '.' && arr2[i] !== '.') {
+        return 0;
+      }
+    }
+  }
+
+  return 0;
+}
+
+// console.log(compareVersions('1', '1.0') === 0); // happy path
+// console.log(compareVersions('0.1', '1.0') === -1); // happy path
+// console.log(compareVersions('3.2.3', '3.2.0') === 1); // happy path
+// console.log(compareVersions('1.2', '1.2.0.0') === 0); // happy path
+// console.log(compareVersions('0.1!', '1.0') === null); // invalid character
+// console.log(compareVersions('1.a', '1.0') === null); // invalid character
+// console.log(compareVersions('0.1', '1..0') === null); // too many periods
+// console.log(compareVersions('0.1', '') === null); // empty string input
+// console.log(compareVersions('0.1', '1.0', '2.0') === null); // more than two inputs?
+// console.log(compareVersions('0.1', '1.123.1') === null); // version number larger than 2 digits?
+// console.log(compareVersions('.1', '1.') === null); // invalid inputs
+
+console.log(compareVersions('1', '1'));            // 0
+console.log(compareVersions('1.1', '1.0'));        // 1
+console.log(compareVersions('2.3.4', '2.3.5'));    // -1
+console.log(compareVersions('1.a', '1'));          // null
+console.log(compareVersions('.1', '1'));           // null
+console.log(compareVersions('1.', '2'));           // null
+console.log(compareVersions('1..0', '2.0'));       // null
+console.log(compareVersions('1.0', '1.0.0'));      // 0
+console.log(compareVersions('1.0.0', '1.1'));      // -1
+console.log(compareVersions('1.0', '1.0.5'));      // -1
+
+
+
+/*
+Given the following problem:
+Write a function called doubler that doubles every value in an array
+- how should we treat 0?
+- what if the array contains non numeric elements?
+  - what to do with strings?
+- should we mutate the caller?
+- what about empty strings?
+- what about empty slots in a sparse array?
+- what about object properties?
+- what about an empty array?
+- what to do with multiple arguments?
+- what if the argument is a string?
+- what if the argument is a non negative integer?
+- what if the argument is an object?
+
+
+*/
