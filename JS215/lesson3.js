@@ -478,3 +478,138 @@ sanitize('2-111123-456-7890') === '0000000000' // number longer than 11 digits
 
 
 // PROBLEM 2
+/*
+--------------------------PROBLEM-------------------
+Implment a Luhn formula to validate an id number
+------------ **Explicit Requirements** -------------
+Rules:
+- counting from the rightmost digit and moving left, double the value of every second digit
+- for any digit that becomes > 9, subtract 9 from the result
+- add all the digits together
+- if the result doesn't end in 0, (modulo 10) it is invalid
+- ignore all non numeric characters
+
+Inputs:
+- number represented as a string
+
+Output:
+- true or false
+
+------------ **Implicit Requirements** -------------
+- a digit of 0 is acceptable
+- ignore spaces
+
+------------- **Clarifying Questions** -------------
+- test case given shows a string of four 'sets' of numbers
+- what about an empty string?
+- should we ignore additional arguments?
+- does each set of numbers have to have four digits?
+  - does this work as a valid input? "23 20 77 35" or "2323 2005"?
+
+
+------------ Examples/Test Cases/Edge Cases ------------
+1111 becomes 2121
+8763 becomes 7733
+>> can iterate from index 0 and change every even index instead of going backwards
+
+1111 becomes 2121 sums as 2 + 1 + 2 + 1 to give a checksum of 6 -- invalid
+8763 becomes 7733, and 7 + 7 + 3 + 3 is 20 --- valid
+
+validLuhn("2323 2005 7766 3554") === true
+2323 2005 7766 3554
+4343 4005 5736 6514
+14    9   21    16 === 60 -- ends with 0 so valid
+
+Happy path:
+validLuhn("2323 2005 7766 3554") === true
+
+validLuhn("232aa!3 20!!05 776cc6 355d4") === true // Ignore non numeric characters
+
+validLuhn("") === false // return false because that is not a valid number
+
+validLuhn("2323 2005 7766 3554", anotherArg) === true // ignore additional arguments?
+validLuhn("2323 2005 7766 3554.1") === false // ignore fractions but this is missing the last element
+
+what about shorter or longer inputs?
+validLuhn("23 20 77 35") === ?? //
+validLuhn("2323 2005 ") ===  ?? //
+
+------------------ Data Structure ------------------
+
+
+-------------------- Algorithm ---------------------
+- filter out non digit characters from the string
+- check that each set has four digits in it??
+- separate the string into an array of sets (split the string by a space)
+- convert each set accoding to the specifications
+  - double every even indexed integer
+- sum up all the individual sets
+- sum up the four numbers to get a result
+  - if result ends in 0, valid, else invalid
+---------------------- Notes -----------------------
+
+// */
+
+// function validLuhn(str) {
+//   // let arr = str.split(' ');
+//   // let filteredArr = arr.map(x => x.replace(/\D/g, ''));
+//   // console.log(filteredArr);
+
+//   // for (let i = 0; i < filteredArr.length; i += 1) {
+//   //   if (filteredArr[i]. length < 4) {
+//   //     return false;
+//   //   }
+//   // }
+
+//   let filtered = str.replace(/\D/g, '');
+//   let resultArr = [];
+//   for (let i = 0; i < filtered.length; i += 1) {
+//     if (i % 2 === 0 ) {
+//       if (filtered[i] * 2 > 9 ) {
+//         resultArr.push((filtered[i] * 2) - 9);
+//       } else {
+//         resultArr.push(filtered[i] * 2);
+//       }
+//     } else {
+//       resultArr.push(Number(filtered[i]));
+//     }
+//   }
+
+//   let result = resultArr.reduce((acc, val) => acc + val);
+
+//   let counter = 0;
+//   if (result % 10 !== 0) {
+//     while (result % 10 !== 0) {
+//       counter += 1;
+//       result += 1;
+//     }
+//     resultArr.push(counter);
+//   }
+
+
+//   return resultArr.join('');
+
+//   // let resultStr = String(result);
+//   // if (resultStr[resultStr.length - 1] === '0') {
+//   //   return true;
+//   // } else {
+//   //   return false;
+//   // }
+//   // console.log(result);
+// }
+
+// // console.log(validLuhn("2323 2005 7766 3554") === true);
+// // console.log(validLuhn("232aa!3 20!!05 776cc6 355d4") === true);
+// console.log(validLuhn("232aa!3 20!!05 776cc6 355d4  ")); //
+
+// // console.log(validLuhn("2323 2005 7766 3554"));// === true);
+
+// // console.log(validLuhn("") === false);
+// // console.log(validLuhn("2323 2005 7766 3554", anotherArg) === true);
+// // console.log(validLuhn("2323 2005 7766 3554.1") === false);
+// console.log(validLuhn("23 20 77 35")); //===  //
+// console.log(validLuhn("2323 2005 ")); //===  ?? //
+
+
+
+//  PROBLEM 3
