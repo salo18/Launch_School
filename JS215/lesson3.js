@@ -613,3 +613,237 @@ validLuhn("2323 2005 ") ===  ?? //
 
 
 //  PROBLEM 3
+/*
+A collection of spelling blocks has two letters per block, as shown in this list:
+
+B:O   X:K   D:Q   C:P   N:A
+G:T   R:E   F:S   J:W   H:U
+V:I   L:Y   Z:M
+
+This limits the words you can spell with the blocks to only those words that do not use both letters from any given block. You can also only use each block once.
+
+Write a function that takes a word string as an argument, and returns true if the word can be spelled using the set of blocks, or false otherwise. You can consider the letters to be case-insensitive when you apply the rules.
+
+Examples:
+isBlockWord('BATCH');      // true
+isBlockWord('BUTCH');      // false
+isBlockWord('jest');       // true
+
+--------------------------PROBLEM-------------------
+- try to spell a word using "blocks"
+
+------------ **Explicit Requirements** -------------
+Rules:
+- a block can only be used once
+- if a block is used, only one letter can be used, the other letter is now unavailable
+- blocks are uppercase letters but lowercase letters are valid inputs
+Inputs:
+- string
+
+Output:
+- boolean
+
+------------ **Implicit Requirements** -------------
+- the block contains each letter of the alphabet only once
+  --- this means that matched letter can be taken out
+
+------------- **Clarifying Questions** -------------
+- what do to about an empty string input?
+- what about other types of inputs?
+- what if there are numbers? should they just be ignored?
+- should the function modify the caller or log anything?
+- is the block a constant or can it be changed?
+  - is the letter only included once in the block or will that change?
+
+------------ Examples/Test Cases/Edge Cases ------------
+
+isBlockWord('BaTcH');       // true // case doesn't matter
+
+don't worry about these, just creative thinking
+isBlockWord(' ');       // false //
+isBlockWord('B9ATCH');      // true
+
+------------------ Data Structure ------------------
+B:O   X:K   D:Q   C:P   N:A
+G:T   R:E   F:S   J:W   H:U
+V:I   L:Y   Z:M
+
+const blocks = [[B, O], [X, K]]
+{'B': 'O', }
+keys and values array based on object?
+
+
+
+-------------------- Algorithm ---------------------
+- convert the string to uppercase
+- iterate through the string
+  - check if each letter is present in the array or object?
+    - if it is, delete that sub array from the main array
+    - if the letter is NOT present, return false
+- otherwise return true
+
+---------------------- Notes -----------------------
+*/
+
+// const outerBlocks = [['B', 'O'], ['X', 'K'], ['D', 'Q'], ['C', 'P'], ['N', 'A'], ['G', 'T'], ['R', 'E'], ['F', 'S'], ['J', 'W'], ['H', 'U'], ['V', 'I'], ['L', 'Y'], ['Z', 'M']];
+
+// function isBlockWord(str) {
+//   let blocks = outerBlocks.slice();
+//   let upperCaseStr = str.toUpperCase();
+
+//   let counter = 0;
+
+//   // let junkArr = [];
+//   let extra;
+
+//   for (let i = 0; i < str.length; i += 1) {
+//     for (let j = 0; j < blocks.length; j += 1) {
+//       // console.log(`string index is ${i}`, `letter is ${upperCaseStr[i]}`);
+//       // console.log(`array index is ${j}`, `array element is ${blocks[j]}`);
+
+//       if (blocks[j].includes(upperCaseStr[i])) {
+//         // extra = blocks.splice(j, 1);
+//         blocks.splice(j, 1);
+//         // junkArr.push(extra);
+//         counter += 1;
+//         continue;
+//       }
+//     }
+//     // console.log(blocks);
+//     // console.log(junkArr);
+//   }
+
+//   if (counter === str.length) {
+//     return true;
+//   } else if (counter !== str.length) {
+//     // console.log(junkArr);
+//     return false;
+//   }
+// }
+
+// console.log(isBlockWord('BATCH'));      // true
+// console.log(isBlockWord('BUTCH'));    // false // reusing letters from the same block
+// console.log(isBlockWord('jest'));       // true // case doesn't matter
+// console.log(isBlockWord('jestasdf'));       // false // case doesn't matter
+
+
+// PROBLEM 4
+
+/*
+You are given a list of numbers in a "short-hand" range where only the significant part of the next number is written because we know the numbers are always increasing (ex. "1, 3, 7, 2, 4, 1" represents [1, 3, 7, 12, 14, 21]). Some people use different separators for their ranges (ex. "1-3, 1-2", "1:3, 1:2", "1..3, 1..2" represent the same numbers [1, 2, 3, 11, 12]). Range limits are always inclusive.
+
+Your job is to return a list of complete numbers.
+
+The possible separators are: ["-", ":", ".."]
+
+"1, 3, 7, 2, 4, 1" --> 1, 3, 7, 12, 14, 21
+"1-3, 1-2" --> 1, 2, 3, 11, 12
+"1:5:2" --> 1, 2, 3, 4, 5, 6, ... 12
+"104-2" --> 104, 105, ... 112
+"104-02" --> 104, 105, ... 202
+"545, 64:11" --> 545, 564, 565, .. 611
+
+--------------------------PROBLEM-------------------
+- convert short hand notation into a full list of numbers
+
+------------ **Explicit Requirements** -------------
+Rules:
+- numbers are always increasing
+  - 1-3, 1-2 === 1, 2, 3, 11, 12
+  - if a number already exists in the range, add to it until the new number is greater than the last digit in the list -- check that the new number ends with the range
+- comma separates ranges that need be dealt with separately
+  - 1-3, 1-2 === 1, 2, 3, 11, 12
+  - 1:5:12 ===  1, 2, 3, 4, 5, 6, ... 12
+- : - or .. connote a range
+- add to the most recent number in the range until the end of the range matches the number
+  - "104-2" --> 104, 105, ... 112
+    - add to the number until the new number ends with 2
+  - "104-02" --> 104, 105, ... 202
+    - add to the number until the new number ends with 02
+- starting number is the start of the range but is an island... range must restart at a number larger than the last
+  - "545, 64:11" --> 545, 564, 565, .. 611
+  - "545, 40:11" --> 545, 640 .. 711
+
+Inputs:
+- a string of numbers separated by - : or .. that represents a range of numbers
+
+Output:
+- an array containing the full range of numbers
+
+------------ **Implicit Requirements** -------------
+
+------------- **Clarifying Questions** -------------
+- what about bad inputs? empty strings?
+- do i ignore non integers and non connectors .. : - ?
+
+
+------------ Examples/Test Cases/Edge Cases ------------
+console.log(shortHand("1, 3, 7, 2, 4, 1")); // 1, 3, 7, 12, 14, 21
+console.log(shortHand("1-3, 1-2")); // 1, 2, 3, 11, 12
+console.log(shortHand("10-3, 1-2")); // 10, 11, 12, 13, 21, 22
+console.log(shortHand("1:5:2")); // 1, 2, 3, 4, 5, 6, ... 12
+console.log(shortHand("104-2")); // 104, 105, ... 112
+console.log(shortHand("104-02")); // 104, 105, ... 202
+console.log(shortHand("545, 64:11")); // 545, 564, 565, .. 611
+console.log(shortHand("545, 40:11")); // 545, 640 .. 711
+
+- test string with letters?
+
+-------------------- Algorithm ---------------------
+- split the string by commas... this will give us the ranges to work with.
+- if there are ranges, destroy them and make the arr of strings represent the numbers represented by the ranges
+- if no ranges (test case 1), push each number into a result array
+  - if the next number in the split array is smaller than the number at the highest index of the result array, increment the number until it is greater than the highest index number of the result AND it ends with the number 7, 2 ==> 12
+
+// - if there is a range, split the range by : .. or -
+//   - for each range, increment the result array by 1 until the last number is greater than the higest index of the array and it ends with the higher limit of the range
+
+
+*/
+
+function shortHand(string) {
+  let arrOfStringNumbers = string.replace(/-+|\.+/g, ':').split(', ');
+
+  let newElements;
+  // let originalLength = arrOfStringNumbers.length;
+
+  // for (let i = 0; i < originalLength; i += 1) {
+  //   if (/:/.test(arrOfStringNumbers[i])) {
+  //     newElements = arrOfStringNumbers[i].split(':');
+  //     console.log(newElements);
+  //     arrOfStringNumbers.splice(i, 1);
+  //     newElements.forEach(x => arrOfStringNumbers.push(x));
+  //   }
+  // }
+
+  arrOfStringNumbers.map(element => {
+    if (/:/.test(element)) {
+      // console.log(element.split(':'));
+      return element.split(':');
+    }
+  });
+
+  // STUCK TRYING TO CONVERT RANGES INTO PROPERLY FORMATTED ARRAY OF STRING NUMBERS !!!
+
+  // arrOfStringNumbers.forEach((element, index) => {
+  //   console.log(element);
+  //   if (/:/.test(element)) {
+  //     newElements = element.split(':');
+  //     console.log(newElements);
+  //     arrOfStringNumbers.splice(index, 1);
+  //     newElements.forEach(x => arrOfStringNumbers.push(x));
+  //   }
+  // });
+
+  console.log(arrOfStringNumbers);
+  // .map(x => Number(x)));
+}
+
+// console.log(shortHand("1, 3, 7, 2, 4, 1")); // 1, 3, 7, 12, 14, 21
+console.log(shortHand("1-3, 1-2")); // 1, 2, 3, 11, 12
+console.log(shortHand("10-3, 1-2")); // 10, 11, 12, 13, 21, 22
+// console.log(shortHand("1:5:2")); // 1, 2, 3, 4, 5, 6, ... 12
+// // console.log(shortHand("104-2")); // 104, 105, ... 112
+// console.log(shortHand("104-02")); // 104, 105, ... 202
+// console.log(shortHand("545, 64-11")); // 545, 564, 565, .. 611
+// console.log(shortHand("545, 40:11")); // 545, 640 .. 711
