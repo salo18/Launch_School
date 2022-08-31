@@ -98,34 +98,29 @@ function ungroupStudents(arr) {
 
   let teacherName;
   let keys;
+
+  let student;
   for (let i = 0; i < arr.length; i += 1) {
     teacherName = arr[i].teacher;
     for (let j = 0; j < arr[i].data.length; j += 1) {
-      console.log(arr[i].data[j]);
       keys = Object.keys(arr[i].data[j]);
 
-      // for (let g = 0; g < keys.length; g += 1) {
-
-      // }
-
+      student = [
+        ['teacher', teacherName],
+      ];
 
       keys = Object.keys(arr[i].data[j]);
       keys.forEach(k => {
-
-        console.log(k, arr[i].data[j][k]);
+        student.push([k, arr[i].data[j][k]])
       });
 
-
-      // result.push({
-      //   teacher: teacherName,
-      //   : arr[i].data[j][k],
-      // });
+      result.push(Object.fromEntries(student));
     }
   }
-  console.log(result);
+  return result;
 }
 
-ungroupStudents([{
+console.log(ungroupStudents([{
   teacher: "Ms. Car",
   data: [{
      name: "James",
@@ -140,7 +135,7 @@ ungroupStudents([{
     name: "Aaron",
     age: 3
   }]
-}])
+}]));
 // [{
 //   teacher: "Ms. Car",
 //   name: "James",
