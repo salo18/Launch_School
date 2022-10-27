@@ -359,19 +359,154 @@
 // // 0
 
 
-function greet(greeting, name) {
-  console.log(`${greeting}, ${name}`);
-}
+// function greet(greeting, name) {
+//   console.log(`${greeting}, ${name}`);
+// }
 
-function generator(arg1, arg2) {
-  return function(arg2) {
-    return greet(arg1, arg2);
-  }
-}
+// function generator(arg1, arg2) {
+//   return function(arg2) {
+//     return greet(arg1, arg2);
+//   }
+// }
 
-let sayHello = generator('Hello');
-sayHello('Brandon');
+// let sayHello = generator('Hello');
+// sayHello('Brandon');
 
-let sayHi = generator('Hi');
-sayHi('Sofie');
+// let sayHi = generator('Hi');
+// sayHi('Sofie');
 // greet('howdy', 'Joe');
+
+
+// Partial Function Application Practice
+
+// 1
+// function subtract(a, b) {
+//   return a - b;
+// }
+
+// // function sub5(a) {
+// //     return subtract(a, 5)
+// // }
+
+// function makeSubN(n) {
+//   return function(a) {
+//     return subtract(a, n);
+//   }
+// }
+
+// let sub5 = makeSubN(5);
+
+// console.log(sub5(10)); // 5
+// console.log(sub5(20)); // 15
+
+
+// // 3
+// function makePartialFunc(func, b) {
+//   return function(a) {
+//     return func(a, b);
+//   }
+// }
+
+// function multiply(a, b) {
+//   return a * b;
+// }
+
+// let multiplyBy5 = makePartialFunc(multiply, 5);
+
+// console.log(multiplyBy5(100)); // 500
+
+// 5
+// let subjects = {
+//   English: ['Bob', 'Tyrone', 'Lizzy'],
+//   Math: ['Fatima', 'Gary', 'Susan'],
+//   Biology: ['Jack', 'Sarah', 'Tanya'],
+// };
+
+// function rollCall(subject, students) {
+//   console.log(subject + ':');
+//   students.forEach(function(student) {
+//     console.log(student);
+//   });
+// }
+
+// function makeMathRollCall() {
+//   return function(students) {
+//     return rollCall('Math', students);
+//   }
+// }
+
+// let mathRollCall = makeMathRollCall();
+// mathRollCall(subjects['Math']);
+// // => Math:
+// // => Fatima
+// // => Gary
+// // => Susan
+
+
+// IIFEs
+
+// (function() {
+//   console.log("Sometimes, syntax isn't intuitive!")
+// }());
+
+
+// var sum = 0;
+// var numbers;
+
+// sum += 10;
+// sum += 31;
+
+// numbers = [1, 7, -3, 3];
+
+// sum += (function sum(arr) {
+//   return arr.reduce(function(sum, number) {
+//     sum += number;
+//     return sum;
+//   }, 0);
+// })(numbers);
+
+// console.log(sum);
+
+
+// 4
+// function countdown(num) {
+//   (function (n) {
+//     for (let i = n; i > -1; i -= 1) {
+//       console.log(i);
+//     }
+//     console.log('Done!');
+//   })(num);
+// }
+
+// countdown(7);
+// // 7
+// 6
+// 5
+// 4
+// 3
+// 2
+// 1
+// 0
+// Done!
+
+// 5
+// (function foo() {
+//   console.log('Bar');
+// })();
+
+// foo() // ?
+
+// 6
+// function countdown(num) {
+//   (function recursiveN (n) {
+//     console.log(n);
+
+//     if (n === 0) {
+//       console.log('Done!');
+//     } else {
+//       recursiveN(n - 1);
+//     }
+//   })(num);
+// }
+
+// countdown(7);
