@@ -183,113 +183,467 @@ function createStudent(name, year) {
 
 // 5
 
-let school = {
-  students: [],
-  addStudent(obj) {
-    let years = ['1st', '2nd', '3rd', '4th', '5th'];
+// let school = {
+//   students: [],
+//   addStudent(obj) {
+//     let years = ['1st', '2nd', '3rd', '4th', '5th'];
 
-    if (years.includes(obj.year)) {
-      this.students.push(obj);
-    } else {
-      console.log('Invali Yea');
-    }
-  },
+//     if (years.includes(obj.year)) {
+//       this.students.push(obj);
+//     } else {
+//       console.log('Invali Yea');
+//     }
+//   },
 
-  viewStudents() {
-    console.log(this.students);
-  },
+//   viewStudents() {
+//     console.log(this.students);
+//   },
 
-  // enrollStudent() {
+//   // enrollStudent() {
 
-  // }
+//   // }
 
-  getReportCard(student) {
-    student.courses.forEach(course => {
-      if (course.grade) {
-        console.log(`${course.name}: ${course.grade}`);
-      } else {
-        console.log(`${course.name}: In progress`);
+//   getReportCard(student) {
+//     student.courses.forEach(course => {
+//       if (course.grade) {
+//         console.log(`${course.name}: ${course.grade}`);
+//       } else {
+//         console.log(`${course.name}: In progress`);
+//       }
+
+//     });
+//   },
+
+//   courseReport(courseName) {
+//     console.log(`--${courseName}--`);
+//     let scores = [];
+//     this.students.forEach(student => {
+//       let subject = student.courses.filter(({name}) => name === courseName)[0];//.filter(x => student.courses.name === x);
+
+//       if (subject !== undefined) {
+//         scores.push(subject.grade);
+//         console.log(student.name, subject.grade);
+//       }
+//     });
+//     if (!scores.includes(undefined)) {
+//       let avg = scores.reduce((acc, current) => acc += current) / scores.length;
+//       console.log(`Course Average: ${avg}`)
+//     }
+//   },
+// }
+
+// // Examples of created student objects with grades; methods on the objects are not shown here for brevity.
+// // The following are only showing the properties that aren't methods for the three objects
+// let foo = {
+//   name: 'foo',
+//   year: '3rd',
+//   courses: [
+//     { name: 'Math', code: 101, grade: 95, },
+//     { name: 'Advanced Math', code: 102, grade: 90, },
+//     { name: 'Physics', code: 202, }
+//   ],
+// };
+
+// let bar = {
+//   name: 'bar',
+//   year: '1st',
+//   courses: [
+//     { name: 'Math', code: 101, grade: 91, },
+//   ],
+// };
+
+// let qux = {
+//   name: 'qux',
+//   year: '2nd',
+//   courses: [
+//     { name: 'Math', code: 101, grade: 93, },
+//     { name: 'Advanced Math', code: 102, grade: 90, },
+//    ],
+// };
+
+// school.addStudent(foo);
+// school.addStudent(bar);
+// school.addStudent(qux);
+
+// // school.viewStudents();
+
+// // school.getReportCard(foo);
+// // = Math: 95
+// // = Advanced Math: 90
+// // = Physics: In progress
+
+
+// school.courseReport('Math');
+// // = =Math Grades=
+// // = foo: 95
+// // = bar: 91
+// // = qux: 93
+// // = ---
+// // = Course Average: 93
+
+// school.courseReport('Advanced Math');
+// // = =Advanced Math Grades=
+// // = foo: 90
+// // = qux: 90
+// // = ---
+// // = Course Average: 90
+
+// school.courseReport('Physics');
+// // = undefined
+
+
+// FUNCTION CONTEXT AND CLOSURES
+
+// 1
+// const person = {
+//   firstName: 'Rick ',
+//   lastName: 'Sanchez',
+//   fullName: this.firstName + this.lastName,
+// };
+
+// console.log(person.fullName); // NaN
+
+// 2
+// const franchise = {
+//   name: 'How to Train Your Dragon',
+//   allMovies() {
+//     // return [1, 2, 3].map(function(number) {
+//     //   return `${this.name} ${number}`;
+//     // });
+
+//     // FIX 1 - arrow function
+//     // return [1, 2, 3].map(number => {
+//     //   return `${this.name} ${number}`;
+//     // });
+
+//     // FIX 2 - declare variable
+//     // let self = this;
+//     // return [1, 2, 3].map(function(number) {
+//     //   return `${self.name} ${number}`;
+//     // });
+
+//     // FIX 3 - add optional context object argument
+//     // return [1, 2, 3].map(function(number) {
+//     //   return `${this.name} ${number}`;
+//     // }, this);
+
+//     // FIX 4 - bind this
+//       // return [1, 2, 3].map(function(number) {
+//       //   return `${this.name} ${number}`;
+//       // }.bind(this));
+//   },
+// };
+
+// console.log(franchise.allMovies());
+
+// 4
+
+// function myBind(func, context) {
+//   // return func.apply(context);
+//   return function(...args) {
+//     return func.apply(context, args);
+//   };
+// }
+
+// 5
+// function myBind(func, ctx, ...partialArgs) {
+//   return function(...args) {
+//     const fullArgs = partialArgs.concat(args);
+
+//     return func.apply(ctx, fullArgs);
+//   };
+// }
+
+// function addNumbers(a, b) {
+//   return a + b;
+// }
+
+// const addFive = myBind(addNumbers, null, 5);
+
+// addFive(10); // 15
+
+
+// 6
+// function myFilter(array, func) {
+//   const result = [];
+
+//   array.forEach(value => {
+//     if (func(value)) {
+//       result.push(value);
+//     }
+//   });
+
+//   return result;
+// }
+
+// const filter = {
+//   allowedValues: [5, 6, 9],
+// };
+
+// function myFilter(array, func, thisArg) {
+//   const result = [];
+
+//   array.forEach(value => {
+//     if (func.call(thisArg, value)) {
+//       result.push(value);
+//     }
+//   });
+
+//   return result;
+// }
+
+// myFilter([2, 1, 3, 4, 5, 6, 12], function(val) {
+//   return this.allowedValues.includes(val);
+// }, filter); // returns [5, 6]
+
+// 7
+// function makeArrays() {
+//   let array = [];
+
+//   return () => {
+//     array.push('');
+//     return array;
+//   };
+// }
+
+// const pushIt = makeArrays();
+// pushIt();
+// // more code
+
+
+// // 8
+// function newStack() {
+//   let arr = [];
+//   return {
+//     push(val) {
+//       arr.push(val);
+//     },
+
+//     pop() {
+//       let value = arr.pop();
+//       return value;
+//     },
+
+//     printStack() {
+//       arr.forEach(x => {
+//         console.log(x);
+//       })
+//     }
+//   }
+// }
+
+// let stack = newStack();
+// stack.push(1);
+// // stack.printStack();
+// stack.push(2);
+// stack.push(3);
+// stack.printStack();
+// stack.pop();
+
+// 9
+// const name = 'Naveed';
+// const greeting = 'Hello';
+
+// const x = {
+//   name: 'Naveed',
+//   greeting: 'Hello',
+// }
+
+// const greeter = {
+//   // message: `${x.greeting} ${x.name}!`,
+//   // message: this.greeting + this.name,
+//   message: (() => {
+//     const name = 'Naveed';
+//     const greeting = 'Hello';
+//     return `${greeting} ${name}!`;
+//   })(),
+//   sayGreetings() {
+//     console.log(this.message);
+//   }
+// };
+
+// greeter.sayGreetings();
+
+
+// 10
+
+function createStudent(name, year) {
+  return {
+    name,
+    year,
+    courses: [],
+    info() {
+      console.log(`${this.name} is a ${this.year} student`);
+    },
+
+    listCourses() {
+      return this.courses;
+    },
+
+    addCourse(course) {
+      this.courses.push(course);
+    },
+
+    addNote(courseCode, note) {
+      const course = this.courses.filter(({code}) => code === courseCode)[0];
+
+      if (course) {
+        if (course.note) {
+          course.note += `; ${note}`;
+        } else {
+          course.note = note;
+        }
       }
 
-    });
-  },
+    },
 
-  courseReport(courseName) {
-    console.log(`--${courseName}--`);
-    let scores = [];
-    this.students.forEach(student => {
-      let subject = student.courses.filter(({name}) => name === courseName)[0];//.filter(x => student.courses.name === x);
+    viewNotes() {
+      this.courses.forEach(course => {
+        if (course.note) {
+          console.log(`${course.name}: ${course.note}`);
+        }
+      });
+    },
 
-      if (subject !== undefined) {
-        scores.push(subject.grade);
-        console.log(student.name, subject.grade);
+    updateNote(courseCode, note) {
+      const course = this.courses.filter(({code}) => code === courseCode)[0];
+
+      if (course) {
+        course.note = note;
       }
-    });
-    if (!scores.includes(undefined)) {
-      let avg = scores.reduce((acc, current) => acc += current) / scores.length;
-      console.log(`Course Average: ${avg}`)
-    }
-  },
+    },
+  };
 }
 
-// Examples of created student objects with grades; methods on the objects are not shown here for brevity.
-// The following are only showing the properties that aren't methods for the three objects
-let foo = {
-  name: 'foo',
-  year: '3rd',
-  courses: [
-    { name: 'Math', code: 101, grade: 95, },
-    { name: 'Advanced Math', code: 102, grade: 90, },
-    { name: 'Physics', code: 202, }
-  ],
-};
 
-let bar = {
-  name: 'bar',
-  year: '1st',
-  courses: [
-    { name: 'Math', code: 101, grade: 91, },
-  ],
-};
+// const school = {
+//   students: [],
+//   addStudent(name, year) {
+//     if (['1st', '2nd', '3rd', '4th', '5th'].includes(year)) {
+//       const student = createStudent(name, year);
+//       this.students.push(student);
+//       return student;
+//     } else {
+//       console.log('Invalid Year');
+//     }
+//   },
 
-let qux = {
-  name: 'qux',
-  year: '2nd',
-  courses: [
-    { name: 'Math', code: 101, grade: 93, },
-    { name: 'Advanced Math', code: 102, grade: 90, },
-   ],
-};
+//   enrollStudent(student, courseName, courseCode) {
+//     student.addCourse({name: courseName, code: courseCode})
+//   },
 
-school.addStudent(foo);
-school.addStudent(bar);
-school.addStudent(qux);
+//   addGrade(student, courseName, grade) {
+//     const course = student.listCourses().filter(({name}) => name === courseName)[0];
 
-// school.viewStudents();
+//     if (course) {
+//       course.grade = grade;
+//     }
+//   },
 
-// school.getReportCard(foo);
-// = Math: 95
-// = Advanced Math: 90
-// = Physics: In progress
+//   getReportCard(student) {
+//     student.listCourses().forEach(({grade, name}) => {
+//       if (grade) {
+//         console.log(`${name}: ${String(grade)}`);
+//       } else {
+//         console.log(`${name}: In progress`);
+//       }
+//     });
+//   },
+
+//   courseReport(courseName) {
+//     function getCourse(student, courseName) {
+//       return student.listCourses().filter(({name}) => name === courseName)[0];
+//     }
+
+//     const courseStudents = this.students.map(student => {
+//       const course = getCourse(student, courseName) || { grade: undefined };
+//       return { name: student.name, grade: course.grade };
+//     }).filter(({grade}) => grade);
+
+//     if (courseStudents.length > 0) {
+//       console.log(`=${courseName} Grades=`);
+
+//       const average = courseStudents.reduce((total, {name, grade}) => {
+//         console.log(`${name}: ${String(grade)}`);
+//         return total + grade;
+//       }, 0) / courseStudents.length;
+
+//       console.log('---');
+//       console.log(`Course Average: ${String(average)}`);
+//     }
+//   },
+// };
 
 
-school.courseReport('Math');
-// = =Math Grades=
-// = foo: 95
-// = bar: 91
-// = qux: 93
-// = ---
-// = Course Average: 93
+// const school = (function() {
+//   let students = [];
+//   let allowedYears = ['1st', '2nd', '3rd', '4th', '5th'];
 
-school.courseReport('Advanced Math');
-// = =Advanced Math Grades=
-// = foo: 90
-// = qux: 90
-// = ---
-// = Course Average: 90
+//   function getCourse(student, courseName) {
+//     return student.listCourses().filter(({name}) => name === courseName)[0];
+//   }
 
-school.courseReport('Physics');
-// = undefined
+//   return {
+//     addStudent(name, year) {
+//       if (allowedYears.includes(year)) {
+//         const student = createStudent(name, year);
+//         students.push(student);
+//         return student;
+//       } else {
+//         console.log('Invalid Year');
+//       }
+//     },
+
+//     enrollStudent(student, courseName, courseCode) {
+//       student.addCourse({name: courseName, code: courseCode})
+//     },
+
+//     addGrade(student, courseName, grade) {
+//       const course = getCourse(student, courseName);
+
+//       if (course) {
+//         course.grade = grade;
+//       }
+//     },
+
+//     getReportCard(student) {
+//       student.listCourses().forEach(({grade, name}) => {
+//         if (grade) {
+//           console.log(`${name}: ${String(grade)}`);
+//         } else {
+//           console.log(`${name}: In progress`);
+//         }
+//       });
+//     },
+
+//     courseReport(courseName) {
+//       const courseStudents = students.map(student => {
+//         const course = getCourse(student, courseName) || { grade: undefined };
+//         return { name: student.name, grade: course.grade };
+//       }).filter(({grade}) => grade);
+
+//       if (courseStudents.length > 0) {
+//         console.log(`=${courseName} Grades=`);
+
+//         const average = courseStudents.reduce((total, {name, grade}) => {
+//           console.log(`${name}: ${String(grade)}`);
+//           return total + grade;
+//         }, 0) / courseStudents.length;
+
+//         console.log('---');
+//         console.log(`Course Average: ${String(average)}`);
+//       }
+//     }
+//   }
+// }());
+
+
+
+// OBJECT CREATION PATTERNS:
+
+
+
+
 
 
 // ASK IN THE FORUM
