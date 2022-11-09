@@ -641,7 +641,227 @@ function createStudent(name, year) {
 
 // OBJECT CREATION PATTERNS:
 
+// 1
+// name property added to make objects easier to identify
+// const foo = {name: 'foo'};
+// const bar = Object.create(foo);
+// bar.name = 'bar';
+// const baz = Object.create(bar);
+// baz.name = 'baz';
+// const qux = Object.create(baz);
+// qux.name = 'qux';
 
+// Object.prototype.ancestors = function() {
+//   let arr = [];
+
+//   let proto = Object.getPrototypeOf(this).name;
+
+//   if (proto !== undefined) {
+//     arr.push(getProto(this));
+//   } else {
+//     arr.push(Object.getPrototypeOf(this));
+//   }
+
+//   function getProto(obj) {
+//     return Object.getPrototypeOf(this).name
+//   }
+
+
+//   console.log(arr);
+// }
+
+
+// Object.prototype.ancestors = function ancestors() {
+//   const ancestor = Object.getPrototypeOf(this);
+
+//   // console.log(ancestor, Object.prototype.hasOwnProperty.call(ancestor, 'name'));
+
+//   // console.log(ancestor.hasOwnProperty('name'));
+
+//   if (Object.prototype.hasOwnProperty.call(ancestor, 'name')) {
+//     return [ancestor.name].concat(ancestor.ancestors());
+//   }
+
+//   return ['Object.prototype'];
+// };
+
+
+// console.log(qux.ancestors());  // returns ['baz', 'bar', 'foo', 'Object.prototype']
+// console.log(baz.ancestors());  // returns ['bar', 'foo', 'Object.prototype']
+// console.log(bar.ancestors());  // returns ['foo', 'Object.prototype']
+// console.log(foo.ancestors());  // returns ['Object.prototype']
+
+// // 2
+// const foo = {
+//   name: 'test',
+//   bar(greeting) {
+//     console.log(`${greeting} ${this.name}`);
+//   },
+// };
+
+// function delegate(obj, name, ...args) {
+//   // return () => obj[name].apply(obj, args);
+//   return function() {
+//     obj[name](...args);
+//   }
+// }
+
+// const baz = {
+//   qux: delegate(foo, 'bar', 'hello'),
+// };
+
+// baz.qux();   // logs 'hello test';
+
+// foo.bar = () => { console.log('changed'); };
+
+// baz.qux();          // logs 'changed'
+
+
+// 3
+
+// function Person(firstName, lastName, age, gender) {
+//   this.firstName = firstName;
+//   this.lastName = lastName;
+//   this.age = age;
+//   this.gender = gender;
+// }
+
+// Person.prototype.eat = function() {
+//   console.log('Eating');
+// }
+
+// Person.prototype.communicate = function() {
+//   console.log('Communicating');
+// }
+
+// Person.prototype.sleep = function() {
+//   console.log('Sleeping');
+// }
+
+// Person.prototype.fullName = function() {
+//   // console.log(`${this.firstName} ${this.lastName}`);
+//   return `${this.firstName} ${this.lastName}`;
+// }
+
+// function Doctor(firstName, lastName, age, gender, specialization) {
+//   Person.call(this, firstName, lastName, age, gender);
+//   this.specialization = specialization;
+// }
+
+// // Doctor.prototype = Object.create(Person.prototype);
+// Doctor.prototype = Person.prototype;
+// Doctor.prototype.diagnose = function() {
+//   console.log('Diagnosing');
+// }
+// Doctor.prototype.constructor = Doctor;
+
+// function Student(firstName, lastName, age, gender, degree) {
+//   Person.call(this, firstName, lastName, age, gender);
+//   this.degree = degree;
+// }
+
+// Student.prototype = Person.prototype;
+// Student.prototype.study = function() {
+//   console.log('Studying');
+// }
+// Student.prototype.constructor = Student;
+
+// function GraduateStudent(firstName, lastName, age, gender, degree, graduateDegree) {
+//   Student.call(this, firstName, lastName, age, gender, degree);
+//   this.graduateDegree = graduateDegree;
+// }
+
+// GraduateStudent.prototype = Student.prototype;
+// GraduateStudent.prototype.research = function() {
+//   console.log('researching');
+// }
+// GraduateStudent.prototype.constructor = GraduateStudent;
+
+class Person {
+  constructor(firstName, lastName, age, gender) {
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.age = age;
+    this.gender = gender;
+  }
+
+  eat() {
+    console.log('Eating');
+  };
+
+  communicate() {
+    console.log('Communicating');
+  }
+
+  sleep() {
+    console.log('Sleeping');
+  }
+
+  fullName() {
+    return `${this.firstName} ${this.lastName}`;
+  }
+}
+
+class Doctor extends Person {
+  constructor(firstName, lastName, age, gender, specialization) {
+    super(firstName, lastName, age, gender);
+    this.specialization = specialization;
+  }
+
+  diagnose() {
+    console.log('Diagnosing');
+  }
+}
+
+class Student extends Person {
+  constructor(firstName, lastName, age, gender, degree) {
+    super(firstName, lastName, age, gender);
+    this.degree = degree;
+  }
+
+  study() {
+    console.log('Studying');
+  }
+}
+
+class GraduateStudent extends Student {
+  constructor(firstName, lastName, age, gender, degree, graduateDegree) {
+    super(firstName, lastName, age, gender, degree);
+    this.graduateDegree = graduateDegree;
+  }
+
+  research() {
+    console.log('Researching');
+  }
+}
+
+// const person = new Person('foo', 'bar', 21, 'gender');
+// console.log(person instanceof Person);     // logs true
+// person.eat();                              // logs 'Eating'
+// person.communicate();                      // logs 'Communicating'
+// person.sleep();                            // logs 'Sleeping'
+// console.log(person.fullName());            // logs 'foo bar'
+
+// const doctor = new Doctor('foo', 'bar', 21, 'gender', 'Pediatrics');
+// console.log(doctor instanceof Person);     // logs true
+// console.log(doctor instanceof Doctor);     // logs true
+// doctor.eat();                              // logs 'Eating'
+// doctor.communicate();                      // logs 'Communicating'
+// doctor.sleep();                            // logs 'Sleeping'
+// console.log(doctor.fullName());            // logs 'foo bar'
+// doctor.diagnose();                         // logs 'Diagnosing'
+
+const graduateStudent = new GraduateStudent('foo', 'bar', 21, 'gender', 'BS Industrial Engineering', 'MS Industrial Engineering');
+// logs true for next three statements
+console.log(graduateStudent instanceof Person);
+console.log(graduateStudent instanceof Student);
+console.log(graduateStudent instanceof GraduateStudent);
+graduateStudent.eat();                     // logs 'Eating'
+graduateStudent.communicate();             // logs 'Communicating'
+graduateStudent.sleep();                   // logs 'Sleeping'
+console.log(graduateStudent.fullName());   // logs 'foo bar'
+graduateStudent.study();                   // logs 'Studying'
+graduateStudent.research();                // logs 'Researching'
 
 
 
