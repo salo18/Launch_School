@@ -162,10 +162,73 @@
 // // this demonstrates the concept of closures. arr is not accessible outside the arrays function but y has access to the variable. this is because a closure is defined at the time of method definition (not invocation), meaning that y has access to arr and can return arr even though arr is not in scope
 // // arr.push('malicious code');
 
+// function Person(name, age) {
+//   this.name = name;
+//   this.age = age;
 
-let arr = ['a', 'b'];
-console.log(arr.prototype);
+//   function sayHi() {
+//     console.log('hi');
+//   };
+// }
+
+// let peep = new Person('peep', 100);
+// // console.log(Person.prototype.constructor)
+// // console.log(peep.__proto__ === Person.prototype)
+// // console.log(Object.getPrototypeOf(peep) === Person.prototype)
+
+// console.log(peep.constructor)
 
 
 
+
+
+
+// function Person(name, age) {
+//   this.name = name;
+//   this.age = age;
+// }
+
+// Person.prototype.sayHi = function() {
+//   console.log(`${this.name} says hi`);
+// }
+
+// function Teenager(name, age, hobby) {
+//   Person.call(this, name, age);
+//   this.hobby = hobby;
+// }
+
+// let tina = new Teenager('Tina', 18, 'writing');
+// // console.log(Teenager.prototype);
+// // Teenager.prototype = Person.prototype;
+// Teenager.prototype = Object.create(Person.prototype); // establishing the prototypal chain
+// Teenager.prototype.constructor = Teenager;
+// // because we reassigned Teenager's prototype, need to give the prototype a constructor that points back to the constructor Function.
+
+// // Teenager.prototype.doHobby = function() {
+// //   console.log(`${this.name} is ${this.hobby}`);
+// // }
+
+// console.log(Object.getOwnPropertyNames(Person.prototype));
+// console.log(Object.getOwnPropertyNames(Teenager.prototype));
+// // console.log(Teenager instanceof Person);
+
+
+// function Animal(name) {
+//   // some statements
+// }
+
+// Animal.prototype = {
+//   speak() {
+//     // some statements
+//   },
+// };
+
+// function Dog() {}
+// Dog.prototype = Object.create(Animal.prototype);
+
+// let doggy = new Dog();
+
+// // console.log(Dog.prototype === Animal.prototype);
+// console.log(Object.getPrototypeOf(doggy) === Dog.prototype);
+// // console.log(doggy instanceof Animal)
 
