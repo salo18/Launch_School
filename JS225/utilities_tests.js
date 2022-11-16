@@ -113,6 +113,7 @@ test("sample returns multiple, non-repetitive elements when a numeric argument s
 test("findWhere is defined", function() {
   return typeof _().findWhere === "function";
 });
+
 (function() {
   var dict = [{ foo: "bar", idx: 0 }, { foo: "baz", idx: 1 }, { foo: "bar", idx: 2 }];
 
@@ -162,8 +163,9 @@ test("pluck returns array of two values", function() {
 
   return pluck.length === 2;
 });
+
 test("pluck returns both values", function() {
-  var coll = [{ foo: "bar" }, { foo: "baz" }],
+  var coll = [{ foo: "bar" }, {bar: "bar"}, { foo: "baz" }],
       pluck = _(coll).pluck("foo");
 
   return pluck[0] === "bar" && pluck[1] === "baz";
@@ -177,10 +179,12 @@ test("keys returns an array of keys from the object", function() {
   var keys = _({ foo: "bar", baz: "quuz" }).keys();
   return keys.length === 2;
 });
+
 test("keys returns all keys that are own properties of the object", function() {
   var keys = _({ foo: "bar", baz: "quuz" }).keys();
   return keys.indexOf("foo") !== -1 && keys.indexOf("baz") !== -1;
 });
+
 test("keys does not return inherited object properties", function() {
   var keys = _({ foo: "bar", baz: "quuz" }).keys();
   return keys.indexOf("toString") === -1;
@@ -194,6 +198,7 @@ test("values returns an array of values from the object", function() {
   var values = _({ foo: "bar", baz: "quuz" }).values();
   return values.length === 2;
 });
+
 test("values returns all values that are own properties of the object", function() {
   var values = _({ foo: "bar", baz: "quuz" }).values();
   return values.indexOf("bar") !== -1 && values.indexOf("quuz") !== -1;

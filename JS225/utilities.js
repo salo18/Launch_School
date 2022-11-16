@@ -47,14 +47,104 @@
         return newArr;
       },
 
-      findWhere() {
-        
-      }
+      findWhere(properties) {
+        let match;
 
-    }
+        element.some(obj => {
+          let all_match = true;
+
+          for (let prop in properties) {
+            if (!(prop in obj) || obj[prop] !== properties[prop]) {
+              all_match = false;
+            }
+          }
+          if (all_match) {
+            match = obj;
+            return true;
+          }
+        });
+        return match;
+      },
+
+      where(properties) {
+        let arr = []
+
+        element.some(obj => {
+          for (let prop in properties) {
+            if ((prop in obj) && obj[prop] === properties[prop]) {
+              arr.push({
+                properties
+              });
+            }
+          }
+        });
+        return arr;
+      },
+
+      pluck(key) {
+        let arr = [];
+        // console.log(Object.keys(element));
+        element.forEach(obj => {
+          // if (Object.keys(obj)[0] === key) {
+            if (obj[key]) {
+            arr.push(obj[key]);
+          }
+        });
+        return arr;
+      },
+
+      keys() {
+        return Object.keys(element);
+      },
+
+      values() {
+        return Object.values(element);
+      },
+
+      pick(...args) {
+        let newObj = {};
+        args.forEach(prop => {
+          if (Object.hasOwn(element, prop)) {
+            newObj[prop] = element[prop];
+          }
+        })
+
+        return newObj;
+      },
+
+      omit(...args) {
+        let newObj = {};
+
+        for (let prop in element) {
+          args.forEach(arg => {
+            if (prop !== arg) {
+              newObj[prop] = element[prop];
+            }
+          })
+        }
+        return newObj;
+      },
+
+      has(prop) {
+        element.hasOwnProperty = {};
+        return Object.hasOwn(element, prop);
+      },
+
+      isElement(obj) {
+        return obj && obj.nodeType === 1;
+      },
+
+      // isArray() {
+
+      // },
+
+      // isObject() {
+
+      // },
+     }
+
   }
 
-  // _.range = function() {}
 
   _.range = function(...args) {
     let newArr = [];
@@ -68,6 +158,48 @@
       }
     }
     return newArr;
+  }
+
+  _.extend = function(...args) {
+    let oldObj = args.pop(),
+        newObj = args[args.length - 1];
+
+    for (let prop in oldObj) {
+      newObj[prop] = oldObj[prop];
+    }
+    return args.length === 1 ? newObj : _.extend.apply(_, args);
+  }
+
+  _.isElement = function(obj) {
+    return obj && obj.nodeType === 1;
+  };
+
+  _.isArray = Array.isArray || function(obj) {
+    return toString.call(obj) === "[object Array]";
+  }
+
+  _.isObject = function(obj) {
+    let type = typeof obj;
+
+    return type === "function" || type === "object" && !!obj;
+  }
+
+  _.isFunction = function(obj) {
+    let type = typeof obj;
+
+    return type === "function";
+  }
+
+  _.isBoolean = function(obj) {
+    return toString.call(obj) === "[object Boolean]";
+  }
+
+  _.isString = function(obj) {
+    return toString.call(obj) === "[object String]";
+  }
+
+  _.isElement = function() {
+    return toString.call(obj) === "[object Number]";
   }
 
   window._ = _;
