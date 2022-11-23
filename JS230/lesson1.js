@@ -1,25 +1,26 @@
-<html>
-  <head>
-    <title>Newsletter Signup</title>
-  </head>
-  <body>
-    <!-- A short comment -->
-    <h1>Newsletter Signup</h1>
-    <p class="intro" id="simple">
-      To receive our weekly emails, enter your email address below.
-      <a href="info.html">Get more info</a>.
-    </p>
-    <div class="form">
-      <form>
-        <label>
-          Enter your email:
-          <input name="email" placeholder="user.name@domain.test"/>
-        </label>
-        <p class="controls">
-          <button id="cancelButton">Cancel</button>
-          <button type="submit" id="submitButton">Subscribe</button>
-        </p>
-      </form>
-    </div>
-  </body>
-</html>
+// function findAllParagraphs() {
+//   let matches = [];
+//   let nodes = document.body.childnodes;
+//   for (let i = 0; i < nodes.length; i += 1) {
+//     if (nodes[i] instanceof HTMLParagraphElement) {
+//       matches.push(nodes[i]);
+//     }
+//   }
+//   return matches;
+// }
+
+// console.log(findAllParagraphs());
+
+
+function addClassToParagraphs(node) {
+  if (node instanceof HTMLParagraphElement) {
+    node.classList.add("article-text");
+  }
+
+  let nodes = node.childNodes;
+  for (let index = 0; index < nodes.length; index += 1) {
+    addClassToParagraphs(nodes[index]);
+  }
+}
+
+addClassToParagraphs(document.body);
