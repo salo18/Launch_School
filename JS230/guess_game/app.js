@@ -4,34 +4,58 @@ document.addEventListener('DOMContentLoaded', () => {
   let form = document.querySelector('form');
   let p = document.getElementById('text');
   let link = document.querySelector('a');
+  let button = document.querySelector('[type="submit"]')
+  let guesses;
 
   function newGame() {
     answer = Math.floor(Math.random() * 100) + 1;
     guesses = 0;
-    p.textContent = 'New game started. Try guessing again';
+    p.textContent = 'Guess a number between 1 and 100.';
+    button.disabled = false;
+    form.reset();
+  }
+
+  function validGuess(num) {
+    // if (parseInt(num, 10) >= 1 && parseInt(num, 10) <= 100) {
+    if (Number(num) >= 1 && Number(num) <= 100) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   form.addEventListener('submit', event => {
     event.preventDefault();
-    let guess = parseInt(input.value, 10);
-    console.log('guess was', guess);
+    let guess;
     let message;
 
-    guesses += 1;
+    if (validGuess(input.value)) {
+      guess = parseInt(input.value, 10);
+      guesses += 1;
 
-    if (guess === answer) {
-      message = `You guessed it! You took ${guesses} guesses`;
+      if (guess === answer) {
+        message = `You guessed it! It took you ${guesses} guesses.`;
 
-    } else if (guess > answer) {
-      message = `Your guess of ${guess} is higher than the number. Try again.`;
-      message.styles.color = 'green';
+        button.disabled = true;
+        // button.style.color = 'yellow';
 
-    } else if (guess < answer) {
-      message = `Your guess of ${guess} is lower than the number. Try again.`;
-      message.style.color = 'red';
+      } else if (guess > answer) {
+        message = `Your guess of ${guess} is higher than the number. Try again.`;
+        p.style.color = 'green';
+
+      } else if (guess < answer) {
+        message = `Your guess of ${guess} is lower than the number. Try again.`;
+        p.style.color = 'blue';
+      }
+
+    } else {
+      message = 'Invalid guess, try again';
+      p.style.color = 'red';
     }
 
     p.textContent = message;
+
+    input.textContent = '';
   });
 
   link.addEventListener('click', event => {
@@ -42,43 +66,4 @@ document.addEventListener('DOMContentLoaded', () => {
   newGame();
 });
 
-// document.addEventListener('DOMContentLoaded', function() {
-//   let form = document.querySelector('form');
-//   let input = document.querySelector('#guess');
-//   let paragraph = document.querySelector('p');
-//   let link = document.querySelector('a');
-//   let answer;
-//   let guesses;
-
-//   function newGame() {
-//     answer = Math.floor(Math.random() * 100) + 1;
-//     guesses = 0;
-//     paragraph.textContent = 'Guess a number from 1 to 100';
-//   }
-
-//   form.addEventListener('submit', event => {
-//     event.preventDefault();
-
-//     let guess = parseInt(input.value, 10);
-//     let message;
-
-//     guesses += 1;
-
-//     if (guess === answer) {
-//       message = `You guessed it! It took you ${guesses} guesses.`;
-//     } else if (guess > answer) {
-//       message = `My number is lower than ${guess}`;
-//     } else {
-//       message = `My number is higher than ${guess}`;
-//     }
-
-//     paragraph.textContent = message;
-//   });
-
-//   link.addEventListener('click', event => {
-//     event.preventDefault();
-//     newGame();
-//   });
-
-//   newGame();
-// });
+// clear the value in the form on each guess
