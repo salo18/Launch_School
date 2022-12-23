@@ -1,0 +1,40 @@
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Document</title>
+   <link rel="stylesheet" href="calc.css">
+
+ </head>
+ <body>
+  <h1>Calculator</h1>
+  <div id='background'>
+    <div id='result'>
+      <p></p>
+    </div>
+
+    <div id='math'>
+      <form>
+        <input type='number' id='operand1'>
+        <select name='operation' id='operator'>
+          <option value='+'>+</option>
+          <option value='-'>-</option>
+          <option value='*'>*</option>
+          <option value='/'>/</option>
+        </select>
+        <input type='number' id='operand2'>
+        <input type='submit' value='=' id='btn'>
+      </form>
+    </div>
+
+    <p>Your History</p>
+    <p>Hover over an operation to redo it.
+    </p>
+    <ul id='history'>
+
+    </ul>
+  </div>
+  <script src="calc.js"></script>
+ </body>
+ </html>
