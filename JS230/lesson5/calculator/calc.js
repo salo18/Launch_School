@@ -9,7 +9,7 @@ extend the functionality
 // - save recent operations below the calculator form
 - perform an operation on the results of the past 10
   - example - add/subtract/multiply/divide the answers for the last 10 results
-- click on a previous operation and load it back into the calculator as an "easy repeat" feature
+// - click on a previous operation and load it back into the calculator as an "easy repeat" feature
   - add option to repeat operation when hovering over the operation
 - change the theme / colors for each operation
   - red for +, yellow for -, etc
@@ -69,7 +69,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
   history.addEventListener('click', (e) => {
     e.preventDefault();
+    let str = e.target.textContent.split('=')[0];
 
+    let operator;
+
+    if (str.includes('+')) {
+      operator = '+';
+    } else if (str.includes('-')) {
+      operator = '-';
+    } else if (str.includes('*')) {
+      operator = '*';
+    } else if (str.includes('/')) {
+      operator = '/';
+    }
+
+    let numbers = str.split(operator);
+
+    document.getElementById('operand1').value = Number(numbers[0]);
+    document.getElementById('operand2').value = Number(numbers[1]);
+    document.getElementById('operator').value = operator;
   });
 
 });
