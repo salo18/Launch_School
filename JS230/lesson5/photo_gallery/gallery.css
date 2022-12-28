@@ -32,6 +32,8 @@ figure {
 
 figure img {
   border: 15px solid #ffffff;
+  transition: 200ms opacity ease-in-out;
+  transition-delay: 200ms;
 }
 
 figcaption {
@@ -57,6 +59,7 @@ li {
 
 li img {
   border: 3px solid #ffffff;
+
 }
 
 .active {

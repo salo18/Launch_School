@@ -2,7 +2,7 @@
 - put event listener on each image
 - if the image is clicked, put it inside the figure
 - animate and color the border of the clicked image
-
+// https://www.youtube.com/watch?v=9HcxHDS2w1s
 */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -10,28 +10,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let figureImg = document.getElementById('main-img');
 
+  let text = figureImg.parentNode.querySelector('figcaption');
+
   images.forEach(img => {
     img.addEventListener('click', (e) => {
       e.preventDefault();
-      // let currentImg = document.querySelector('.current');
-      // currentImg.classList.remove('current');
-      // console.log(currentImg);
-
-      // let x = images.querySelectorAll('current');
-      // console.log(images);
 
       let newImgSrc = e.target.getAttribute('src');
 
-      // console.log(newImgSrc);
       figureImg.setAttribute('src', newImgSrc);
 
       images.forEach(link => link.classList.remove('active'));
 
       let currentImg = e.target;
       currentImg.classList.add('active');
-      // newImg.classList.toggle('current');
-      // figureImg.getAttribute('title')
-      // console.log(newImg);
+      text.textContent = currentImg.getAttribute('alt');
     });
   });
 
@@ -39,25 +32,45 @@ document.addEventListener('DOMContentLoaded', () => {
 
   buttons.forEach(button => {
     button.addEventListener('click', () => {
+
       const offset = button.dataset.button === 'next' ? 1 : -1;
-      const slides = button.closest('#slideshow').querySelector('[data-images]');
-      // console.log(slides);
 
-      const activeImg = slides.querySelector('.active') || 1;
+      const slides = Array.prototype.slice.call(button.closest('#slideshow').querySelector('[data-images]').children);
 
-      console.log(activeImg);
+      const ul = button.closest('#slideshow').querySelector('[data-images]');
+
+      const activeImg = ul.querySelector('.active');
+
       let newIndex;
-      if (activeImg) {
-        newIndex = [...slides.children].indexOf(activeImg) + offset;
-      } else {
+      if (activeImg !== null) {
+        newIndex = slides.indexOf(activeImg.parentNode) + offset;
+      } else { // no active image selected yet - first instance of app
+        if (button.dataset.button === 'next') {
+          newIndex = 1;
+        } else if (button.dataset.button === 'previous') {
+          newIndex = slides.length - 1;
+        }
+      }
+
+      if (newIndex < 0) {
+        newIndex = slides.length - 1;
+      }
+      if (newIndex >= slides.length) {
         newIndex = 0;
       }
-      // console.log(activeImg);
-      // console.log(newIndex);
-      console.log([...slides.children].indexOf(activeImg));
+
+      let src = slides[newIndex].querySelector('img').getAttribute('src');
+      let alt = slides[newIndex].querySelector('img').getAttribute('alt');
+
+      figureImg.setAttribute('src', src);
+
+      slides[newIndex].querySelector('img').classList.add('active');
+      activeImg.classList.remove('active');
+      text.textContent = alt;
+
+
     });
   })
-  // console.log(buttons);
 });
 
 // $(function() {
