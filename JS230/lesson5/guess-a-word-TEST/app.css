@@ -1,0 +1,93 @@
+/* https://www.magicpattern.design/tools/css-backgrounds */
+
+body {
+  margin: 0;
+  padding: 0;
+
+  background-color: #e5e5f7;
+  opacity: .95;
+  background: linear-gradient(135deg, #ffffff55 25%, transparent 25%) -10px 0/ 20px 20px, linear-gradient(225deg, #ffffff 25%, transparent 25%) -10px 0/ 20px 20px, linear-gradient(315deg, #ffffff55 25%, transparent 25%) 0px 0/ 20px 20px, linear-gradient(45deg, #ffffff 25%, #e5e5f7 25%) 0px 0/ 20px 20px;
+}
+
+body.win {
+  /* animation: win 3s; */
+  /* background-color: #79A1F2; */
+  background: linear-gradient(135deg, #ffffff55 25%, transparent 25%) -10px 0/ 20px 20px, linear-gradient(225deg, #ffffff 25%, transparent 25%) -10px 0/ 20px 20px, linear-gradient(315deg, #ffffff55 25%, transparent 25%) 0px 0/ 20px 20px, linear-gradient(45deg, #ffffff 25%, #79A1F2 25%) 0px 0/ 20px 20px;
+
+}
+
+body.lose {
+  /* animation: lose 3s; */
+  background: linear-gradient(135deg, #ffffff55 25%, transparent 25%) -10px 0/ 20px 20px, linear-gradient(225deg, #ffffff 25%, transparent 25%) -10px 0/ 20px 20px, linear-gradient(315deg, #ffffff55 25%, transparent 25%) 0px 0/ 20px 20px, linear-gradient(45deg, #ffffff 25%, #f18378 25%) 0px 0/ 20px 20px;
+}
+
+/* @keyframes win {
+  0% {
+    background-color: #e5e5f7;
+    /* linear-gradient(135deg, #ffffff55 25%, transparent 25%) -10px 0/ 20px 20px, linear-gradient(225deg, #ffffff 25%, transparent 25%) -10px 0/ 20px 20px, linear-gradient(315deg, #ffffff55 25%, transparent 25%) 0px 0/ 20px 20px, linear-gradient(45deg, #ffffff 25%, #e5e5f7 25%) 0px 0/ 20px 20px; */
+  /* } 100% {
+    background-color: #79A1F2;
+    background: linear-gradient(135deg, #ffffff55 25%, transparent 25%) -10px 0/ 20px 20px, linear-gradient(225deg, #ffffff 25%, transparent 25%) -10px 0/ 20px 20px, linear-gradient(315deg, #ffffff55 25%, transparent 25%) 0px 0/ 20px 20px, linear-gradient(45deg, #ffffff 25%, #79A1F2 25%) 0px 0/ 20px 20px;
+  /* } */
+/* } */
+
+main {
+  padding: 1em;
+  background-color: white;
+  /* display: flex; */
+  width: 800px;
+  margin: 0 auto;
+
+}
+
+
+#tree {
+  position: relative;
+  background: url('images/tree.png');
+  width: 678px;
+  height: 517px;
+}
+
+
+#apples {
+  width: 374px;
+  height: 322px;
+  background: url('images/apples.png') 0 0 no-repeat;
+  position: absolute;
+  z-index: 1;
+  left: 11em;
+  top: 2em;
+}
+
+
+#apples.guess1 { background-position: 0 -322px }
+#apples.guess2 { background-position: 0 -644px }
+#apples.guess3 { background-position: 0 -966px }
+#apples.guess4 { background-position: 0 -1288px }
+#apples.guess5 { background-position: 0 -1610px }
+#apples.guess6 { display: none }
+
+span {
+  font-family: 'Courier New', Courier, monospace;
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  margin: 15px 10px 0 0;
+
+  font-size: 2em;
+  text-transform: uppercase;
+  border-bottom: 3px solid #333333;
+  text-align: center;
+  vertical-align: top;
+}
+
+h2 {
+  display: inline-block;
+  font-size: 1.75em;
+  font-family: 'Courier New', Courier, monospace;
+  /* margin-right: 1em; */
+}
+
+/* #guesses {
+  padding:
+} */
