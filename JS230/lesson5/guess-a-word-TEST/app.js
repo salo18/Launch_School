@@ -28,10 +28,22 @@ const randomWord = (array, length) => {
   return word;
 }
 
+async function getWord() {
+  let number = Math.floor(Math.random() * 1154);
+
+  let response = await fetch(`https://pokeapi.co/api/v2/pokemon/${number}`)
+  .then(res => res.json())
+  .then(res => res);
+
+  return response
+}
+
+
 document.addEventListener('DOMContentLoaded', () => {
   let words = ['RELUCTANCE', 'OCCUPATION', 'COMPREHENSIVE', 'EMBARRASSMENT', 'INVESTIGATION', 'REVOLUTIONARY'];
 
   let word = randomWord(words, words.length);
+  // let word = getWord();
 
   let wordH2 = document.getElementById('word');
   let guessesH2 = document.getElementById('guesses');
